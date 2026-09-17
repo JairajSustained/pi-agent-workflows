@@ -1,0 +1,155 @@
+<template>
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+
+    /* Code editorial frame. Cream is the ground, ink is the voice, coral is the voltage
+       (exactly once: "code." and its drawn rule). Warm navy carries the code surface, and
+       syntax colour inside that panel is fixed decoration, not brand hue. */
+    #root{
+      position:relative;width:1920px;height:1080px;overflow:hidden;
+      color:#141413;font-family:Inter,system-ui,sans-serif;
+      container-type:size;
+      /* cqw against this frame container: 92px @1920 = 4.79cqw, 26px = 1.354cqw, 24px = 1.25cqw */
+      --f03-display:4.79cqw;
+      --f03-kicker:1.354cqw;
+      --f03-code:1.25cqw;
+    }
+    .clip{position:absolute;inset:0}
+
+    /* ── chrome ─────────────────────────────────────────────────────── */
+    .f03-kicker{
+      position:absolute;left:80px;top:72px;
+      font-family:"JetBrains Mono",monospace;font-size:var(--f03-kicker);
+      letter-spacing:.16em;text-transform:uppercase;color:#141413;opacity:.55;
+    }
+    .f03-mark{
+      position:absolute;left:80px;top:790px;
+      font-family:"JetBrains Mono",monospace;font-size:var(--f03-kicker);
+      letter-spacing:.16em;text-transform:uppercase;color:#141413;opacity:.5;
+    }
+
+    /* ── Scene 1: continuity ghost of frame 2's jammed box (exits left) ── */
+    .f03-ghost{
+      position:absolute;left:80px;top:200px;width:900px;height:560px;
+      border:1px solid rgba(20,20,19,.22);border-radius:12px;padding:24px;
+    }
+    .f03-ghost-bar{height:62px;margin-bottom:14px;background:rgba(20,20,19,.09);border:1px solid rgba(20,20,19,.10);border-radius:8px}
+
+    /* ── the thesis: three masked display lines ─────────────────────── */
+    .f03-headline{
+      position:absolute;left:80px;top:250px;width:1010px;
+      font-family:"EB Garamond",Georgia,serif;font-weight:400;
+      font-size:var(--f03-display);line-height:1.08;letter-spacing:-.018em;color:#141413;
+    }
+    .f03-mask{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+    .f03-line{display:block;will-change:transform}
+
+    .f03-sub{
+      position:absolute;left:80px;top:600px;width:1010px;
+      font-family:"EB Garamond",Georgia,serif;font-weight:400;
+      font-size:var(--f03-display);line-height:1.08;letter-spacing:-.018em;color:#141413;
+    }
+    /* the word wrapper carries the drawn rule so it tracks the glyphs, not a guessed offset */
+    .f03-word{position:relative;display:inline-block}
+    .f03-coral{color:#CC785C}
+    .f03-under{
+      position:absolute;left:0;right:0;bottom:.04em;height:1px;background:#CC785C;
+      transform-origin:left center;
+    }
+
+    /* ── Scene 3: the navy code surface (the promise frames 4-7 keep) ── */
+    .f03-panel{
+      position:absolute;left:1160px;top:250px;width:680px;height:470px;
+      background:#181715;border:1px solid rgba(250,249,245,.14);border-radius:12px;
+      padding:28px;color:#FAF9F5;box-sizing:border-box;
+    }
+    .f03-tab{
+      font-family:"JetBrains Mono",monospace;font-size:var(--f03-code);
+      letter-spacing:.02em;color:#FAF9F5;opacity:.65;margin-bottom:20px;
+    }
+    .f03-caret{
+      display:inline-block;width:3px;height:.85em;background:#CC785C;
+      vertical-align:-.08em;margin-left:10px;
+    }
+    .f03-code{
+      margin:0;font-family:"JetBrains Mono",monospace;font-size:var(--f03-code);
+      line-height:1.72;white-space:pre;color:#FAF9F5;
+    }
+    .f03-code-line{display:block}
+    .f03-k{color:#CC785C}
+    .f03-s{color:#5DB8A6}
+    .f03-p{color:#FAF9F5;opacity:.7}
+  </style>
+
+  <div data-hf-id="hf-cz88" id="root" data-composition-id="03-plan-in-code" data-start="0" data-duration="8.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-klcc" class="clip" data-start="0" data-duration="8.5" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-tnnz" class="f03-ghost">
+      <div data-hf-id="hf-q9j3" class="f03-ghost-bar"></div>
+      <div data-hf-id="hf-83b3" class="f03-ghost-bar"></div>
+      <div data-hf-id="hf-7p02" class="f03-ghost-bar"></div>
+      <div data-hf-id="hf-7ap1" class="f03-ghost-bar"></div>
+      <div data-hf-id="hf-a2u8" class="f03-ghost-bar"></div>
+    </div>
+
+    <div data-hf-id="hf-n034" class="f03-kicker">✱ 03 · the move</div>
+
+    <div data-hf-id="hf-cumu" class="f03-headline">
+      <span data-hf-id="hf-nco7" class="f03-mask"><span data-hf-id="hf-0b9y" class="f03-line" id="f03-h1">The plan doesn't have</span></span>
+      <span data-hf-id="hf-cu4n" class="f03-mask"><span data-hf-id="hf-t7xo" class="f03-line" id="f03-h2">to live in the</span></span>
+      <span data-hf-id="hf-cftm" class="f03-mask"><span data-hf-id="hf-tzlg" class="f03-line" id="f03-h3">model's context.</span></span>
+    </div>
+
+    <div data-hf-id="hf-91f8" class="f03-sub">
+      <span data-hf-id="hf-c1il" class="f03-mask"><span data-hf-id="hf-k2t1" class="f03-line" id="f03-subline">It can live in <span data-hf-id="hf-9ge3" class="f03-word"><span data-hf-id="hf-xr0j" class="f03-coral">code.</span><i data-hf-id="hf-z1by" class="f03-under" id="f03-under"></i></span></span></span>
+    </div>
+
+    <div data-hf-id="hf-6e6u" class="f03-panel" id="f03-panel">
+      <div data-hf-id="hf-q67c" class="f03-tab" id="f03-tab">script.js<span data-hf-id="hf-4xvt" class="f03-caret" id="f03-caret"></span></div>
+      <pre data-hf-id="hf-kaqj" class="f03-code"><span data-hf-id="hf-1j0m" class="f03-code-line" id="f03-c1"><span data-hf-id="hf-68tt" class="f03-k">const</span> meta <span data-hf-id="hf-gs78" class="f03-p">=</span> <span data-hf-id="hf-o38e" class="f03-p">{</span></span><span data-hf-id="hf-u4s3" class="f03-code-line" id="f03-c2">  name<span data-hf-id="hf-h6i9" class="f03-p">:</span> <span data-hf-id="hf-apgz" class="f03-s">'audit'</span><span data-hf-id="hf-a0zr" class="f03-p">,</span></span><span data-hf-id="hf-o2xl" class="f03-code-line" id="f03-c3">  phases<span data-hf-id="hf-9uzp" class="f03-p">:</span> <span data-hf-id="hf-v527" class="f03-p">[{</span> title<span data-hf-id="hf-b1ws" class="f03-p">:</span> <span data-hf-id="hf-zlpv" class="f03-s">'Scan'</span> <span data-hf-id="hf-a8ag" class="f03-p">},</span></span><span data-hf-id="hf-oxc8" class="f03-code-line" id="f03-c4">           <span data-hf-id="hf-lcn6" class="f03-p">{</span> title<span data-hf-id="hf-anlr" class="f03-p">:</span> <span data-hf-id="hf-n32t" class="f03-s">'Challenge'</span> <span data-hf-id="hf-gyl1" class="f03-p">}],</span></span><span data-hf-id="hf-qv27" class="f03-code-line" id="f03-c5"><span data-hf-id="hf-138t" class="f03-p">};</span></span><span data-hf-id="hf-xia5" class="f03-code-line" id="f03-c6"><span data-hf-id="hf-82ed" class="f03-k">const</span> findings <span data-hf-id="hf-x43g" class="f03-p">=</span> <span data-hf-id="hf-2tbg" class="f03-k">await</span> parallel<span data-hf-id="hf-zl0g" class="f03-p">([</span></span></pre>
+    </div>
+
+    <div data-hf-id="hf-5hyf" class="f03-mark">a script the model writes</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const D = 8;
+
+    /* ── Scene 1 (0.0–3.0s): the jammed box exits left; the thesis sets line by line ──
+       Ghost is deliberately faint and leaves fast so the hero line is up early. */
+    tl.fromTo("#root .f03-ghost", { x: 0, opacity: 0.7 }, { x: -1080, opacity: 0, duration: 0.95, ease: "power3.out" }, 0);
+    tl.fromTo("#f03-h1", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.65, ease: "power3.out" }, 0.25);
+    tl.fromTo("#f03-h2", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.65, ease: "power3.out" }, 0.95);
+    tl.fromTo("#f03-h3", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.65, ease: "power3.out" }, 1.65);
+
+    /* ── Scene 2 (3.0–4.8s): "It can live in code." + the rule drawing under it ── */
+    tl.fromTo("#f03-subline", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.65, ease: "power3.out" }, 3.05);
+    tl.fromTo("#f03-under", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out" }, 3.72);
+
+    /* ── Scene 3 (4.8–6.4s): the navy surface rises, then its lines fill in sequence ── */
+    tl.fromTo("#f03-panel", { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.82);
+    tl.fromTo("#f03-tab", { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 5.0);
+    tl.fromTo("#f03-caret", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 5.3);
+    /* finite, deterministic idle blink while the panel settles — no repeat/yoyo anywhere */
+    tl.to("#f03-caret", { opacity: 0.15, duration: 0.12, ease: "none" }, 5.5);
+    tl.to("#f03-caret", { opacity: 1, duration: 0.12, ease: "none" }, 5.68);
+    tl.to("#f03-caret", { opacity: 0.15, duration: 0.12, ease: "none" }, 5.86);
+    tl.to("#f03-caret", { opacity: 1, duration: 0.12, ease: "none" }, 6.04);
+
+    const codeLines = ["#f03-c1", "#f03-c2", "#f03-c3", "#f03-c4", "#f03-c5", "#f03-c6"];
+    codeLines.forEach((sel, i) => {
+      /* same ease family, alternating axis — the fill reads as one pass, not a stamp */
+      const axis = i % 2 === 0 ? { y: 12 } : { y: 10 };
+      tl.fromTo(sel, { ...axis, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 5.15 + i * 0.14);
+    });
+
+    /* ── Scene 4 (6.4–8.0s): the closing line lands last, then the frame holds still ── */
+    tl.fromTo("#root .f03-mark", { y: 12, opacity: 0 }, { y: 0, opacity: 0.5, duration: 0.5, ease: "power3.out" }, 6.45);
+
+    window.__timelines["03-plan-in-code"] = tl;
+  </script>
+</template>

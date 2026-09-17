@@ -1,0 +1,230 @@
+<template>
+  <style>
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+    *{margin:0;padding:0;box-sizing:border-box}
+    #root{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:Inter,system-ui,sans-serif;color:#FAF9F5;isolation:isolate}
+    .f05-clip{position:absolute;inset:0;background:#181715}
+    .f05-rail{position:absolute;left:80px;top:72px;font-family:"JetBrains Mono",monospace;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:#FAF9F5;opacity:.72}
+    .f05-rail b{font-weight:400;color:#FAF9F5}
+    .f05-surface{position:absolute;left:80px;top:150px;width:520px;height:600px;background:#1F1E1B;border:1px solid rgba(250,249,245,.14);border-radius:12px;padding:34px 36px;z-index:2}
+    .f05-pre{font-family:"JetBrains Mono",monospace;font-size:25px;line-height:1.62;white-space:pre;color:#FAF9F5}
+    .f05-ln{display:block;position:relative}
+    .f05-dim{color:rgba(250,249,245,.55)}
+    .f05-str{color:#5DB8A6}
+    .f05-hl{position:relative}
+    .f05-hl-bar{position:absolute;left:-6px;right:-6px;bottom:-3px;height:14px;background:rgba(204,120,92,.32);transform-origin:0% 50%;border-radius:2px}
+    .f05-hl-txt{position:relative}
+    .f05-glow{position:absolute;left:1465px;top:218px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(204,120,92,.42) 0%,rgba(204,120,92,.14) 42%,rgba(204,120,92,0) 72%);z-index:1;pointer-events:none}
+    .f05-graph{position:absolute;left:660px;top:150px;z-index:2}
+    .f05-edge{stroke:rgba(250,249,245,.38);stroke-width:1.5;fill:none}
+    .f05-head{fill:rgba(250,249,245,.5)}
+    .f05-node-fill{fill:#252320}
+    .f05-node-line{stroke:rgba(250,249,245,.28);stroke-width:1}
+    .f05-node-fill-hub{fill:#252320}
+    .f05-node-line-hub{stroke:#CC785C;stroke-width:1.5}
+    .f05-legend{position:absolute;left:660px;top:790px;width:1180px;font-family:"JetBrains Mono",monospace;font-size:26px;color:#FAF9F5;opacity:.6;z-index:2}
+    .f05-copy{position:absolute;left:80px;top:846px;width:1760px;font-family:"JetBrains Mono",monospace;font-size:26px;color:#FAF9F5;z-index:2}
+    .f05-copy-a,.f05-copy-b{display:inline-block}
+    .f05-copy-b{color:#FAF9F5}
+  </style>
+  <div data-hf-id="hf-yxex" id="root" data-composition-id="05-what-it-spawns" data-start="0" data-duration="9.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-q0eh" class="f05-clip clip" data-start="0" data-duration="9.5" data-track-index="0"></div>
+    <div data-hf-id="hf-bjwn" class="f05-glow"></div>
+    <div data-hf-id="hf-rgdz" class="f05-rail">✱ 05 · <b data-hf-id="hf-dznk">one call, three workers</b></div>
+
+    <div data-hf-id="hf-ra5x" class="f05-surface">
+      <div data-hf-id="hf-88m7" class="f05-pre">
+<span data-hf-id="hf-idgu" class="f05-ln">phase(<span data-hf-id="hf-54lr" class="f05-str">'Scan'</span>);</span><span data-hf-id="hf-7fmr" class="f05-ln"> </span><span data-hf-id="hf-oive" class="f05-ln"><span data-hf-id="hf-5fbk" class="f05-dim">const</span> findings =</span><span data-hf-id="hf-x9gc" class="f05-ln">  <span data-hf-id="hf-izi9" class="f05-dim">await</span> parallel(</span><span data-hf-id="hf-rxg6" class="f05-ln">    areas.map((a) =&gt; () =&gt;</span><span data-hf-id="hf-kal5" class="f05-ln f05-hl"><i data-hf-id="hf-qrx8" class="f05-hl-bar"></i><span data-hf-id="hf-sgc2" class="f05-hl-txt">      agent(<span data-hf-id="hf-ekk6" class="f05-str">`Audit ${a}.`</span>, {</span></span><span data-hf-id="hf-x3yn" class="f05-ln">        label: <span data-hf-id="hf-8zvj" class="f05-str">`scan-${a}`</span>,</span><span data-hf-id="hf-lh0p" class="f05-ln">      })</span><span data-hf-id="hf-9cie" class="f05-ln">    ),</span><span data-hf-id="hf-eihr" class="f05-ln">  );</span>
+      </div>
+    </div>
+
+    <svg data-hf-id="hf-mj8p" class="f05-graph" width="1180" height="640" viewBox="0 0 1180 640" xmlns="http://www.w3.org/2000/svg" aria-label="One agent call fanning out to three isolated workers and collecting into a variable">
+      <g data-hf-id="hf-n90p" class="f05-edge-g">
+        <line data-hf-id="hf-7r6v" class="f05-edge" x1="300" y1="298" x2="424" y2="108" />
+        <line data-hf-id="hf-dlt3" class="f05-edge" x1="300" y1="298" x2="424" y2="298" />
+        <line data-hf-id="hf-e24y" class="f05-edge" x1="300" y1="298" x2="424" y2="488" />
+        <line data-hf-id="hf-cmft" class="f05-edge" x1="750" y1="108" x2="894" y2="292" />
+        <line data-hf-id="hf-q4nz" class="f05-edge" x1="750" y1="298" x2="894" y2="298" />
+        <line data-hf-id="hf-coly" class="f05-edge" x1="750" y1="488" x2="894" y2="304" />
+      </g>
+      <g data-hf-id="hf-r12o" class="f05-head-g">
+        <polygon data-hf-id="hf-f3ma" class="f05-head" points="424.0,108.0 422.6,117.8 415.6,113.2" />
+        <polygon data-hf-id="hf-2hdv" class="f05-head" points="424.0,298.0 415.0,302.2 415.0,293.8" />
+        <polygon data-hf-id="hf-m3k8" class="f05-head" points="424.0,488.0 415.6,482.8 422.6,478.2" />
+        <polygon data-hf-id="hf-kmjc" class="f05-head" points="894.0,292.0 885.1,287.5 891.8,282.3" />
+        <polygon data-hf-id="hf-nura" class="f05-head" points="894.0,298.0 885.0,302.2 885.0,293.8" />
+        <polygon data-hf-id="hf-the1" class="f05-head" points="894.0,304.0 891.8,313.7 885.1,308.5" />
+      </g>
+
+      <g data-hf-id="hf-l9on" class="f05-node f05-hub-g">
+        <rect data-hf-id="hf-uujk" class="f05-node-fill-hub" x="0" y="250" width="300" height="96" rx="12" />
+        <rect data-hf-id="hf-fpnl" class="f05-node-line-hub" x="0" y="250" width="300" height="96" rx="12" fill="none" />
+        <text data-hf-id="hf-q94o" x="150" y="294" text-anchor="middle" fill="#FAF9F5" font-family="JetBrains Mono, monospace" font-size="25">agent(prompt)</text>
+        <text data-hf-id="hf-1k6r" x="150" y="324" text-anchor="middle" fill="#FAF9F5" opacity=".6" font-family="JetBrains Mono, monospace" font-size="20">one call</text>
+      </g>
+
+      <g data-hf-id="hf-velq" class="f05-node f05-w1-g">
+        <rect data-hf-id="hf-1j2m" class="f05-node-fill" x="430" y="60" width="320" height="96" rx="12" />
+        <rect data-hf-id="hf-tcy9" class="f05-node-line" x="430" y="60" width="320" height="96" rx="12" fill="none" />
+        <text data-hf-id="hf-e1qe" x="590" y="103" text-anchor="middle" fill="#FAF9F5" font-family="JetBrains Mono, monospace" font-size="24">scan-auth</text>
+      </g>
+      <g data-hf-id="hf-qwc5" class="f05-node f05-w2-g">
+        <rect data-hf-id="hf-xv2d" class="f05-node-fill" x="430" y="250" width="320" height="96" rx="12" />
+        <rect data-hf-id="hf-wxw8" class="f05-node-line" x="430" y="250" width="320" height="96" rx="12" fill="none" />
+        <text data-hf-id="hf-vwh7" x="590" y="293" text-anchor="middle" fill="#FAF9F5" font-family="JetBrains Mono, monospace" font-size="24">scan-billing</text>
+      </g>
+      <g data-hf-id="hf-yi4o" class="f05-node f05-w3-g">
+        <rect data-hf-id="hf-9yik" class="f05-node-fill" x="430" y="440" width="320" height="96" rx="12" />
+        <rect data-hf-id="hf-sh1x" class="f05-node-line" x="430" y="440" width="320" height="96" rx="12" fill="none" />
+        <text data-hf-id="hf-zuir" x="590" y="483" text-anchor="middle" fill="#FAF9F5" font-family="JetBrains Mono, monospace" font-size="24">scan-jobs</text>
+      </g>
+
+      <g data-hf-id="hf-rfcf" class="f05-tag" fill="#FAF9F5" font-family="JetBrains Mono, monospace" font-size="20">
+        <text data-hf-id="hf-72gc" class="f05-tag-t" x="590" y="134" text-anchor="middle">own context window</text>
+        <text data-hf-id="hf-u9f9" class="f05-tag-t" x="590" y="324" text-anchor="middle">own context window</text>
+        <text data-hf-id="hf-xd9m" class="f05-tag-t" x="590" y="514" text-anchor="middle">own context window</text>
+      </g>
+
+      <g data-hf-id="hf-c6fs" class="f05-node f05-collect-g">
+        <rect data-hf-id="hf-8ks1" class="f05-node-fill" x="900" y="220" width="270" height="156" rx="12" />
+        <rect data-hf-id="hf-5a1q" class="f05-node-line" x="900" y="220" width="270" height="156" rx="12" fill="none" />
+        <text data-hf-id="hf-edze" x="1035" y="290" text-anchor="middle" fill="#FAF9F5" font-family="JetBrains Mono, monospace" font-size="25">findings[3]</text>
+        <text data-hf-id="hf-8e0s" x="1035" y="322" text-anchor="middle" fill="#FAF9F5" opacity=".6" font-family="JetBrains Mono, monospace" font-size="20">back in the script</text>
+      </g>
+    </svg>
+
+    <div data-hf-id="hf-x70f" class="f05-legend">no outputs in your window · three workers, three clean slates</div>
+    <div data-hf-id="hf-mjrn" class="f05-copy"><span data-hf-id="hf-egnf" class="f05-copy-a">agent() spawns a real pi process.</span> <span data-hf-id="hf-8l2e" class="f05-copy-b">· Its own context. It sees only its prompt.</span></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var root = document.getElementById("root");
+      var tl = gsap.timeline({ paused: true });
+
+      var edges = gsap.utils.toArray(root.querySelectorAll(".f05-edge"));
+      var heads = gsap.utils.toArray(root.querySelectorAll(".f05-head"));
+      var lines = gsap.utils.toArray(root.querySelectorAll(".f05-ln"));
+      var tags = gsap.utils.toArray(root.querySelectorAll(".f05-tag-t"));
+
+      // Every edge draws from its own measured length — never a guessed number.
+      // The measured offset is kept so each draw is an explicit fromTo (correct at
+      // t=0 and on every seek, never dependent on when a `to` first renders).
+      var edgeLen = edges.map(function (p) {
+        var len = p.getTotalLength();
+        p.style.strokeDasharray = len + " " + len;
+        p.style.strokeDashoffset = String(len);
+        return len;
+      });
+
+      // The pane and kicker are the held stage (shared with frames 4–7), so they are
+      // present at t=0 — the frame never opens blank. Only the code inside reveals.
+      tl.fromTo(".f05-rail", { opacity: 0 }, { opacity: 0.72, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo(".f05-surface", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
+
+      // Scene 1 — the code fills the pane line by line, then the agent(...) call
+      // takes the coral underline as the reading beat lands on it.
+      tl.fromTo(
+        lines,
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.34, ease: "power2.out", stagger: 0.08 },
+        0.05
+      );
+      tl.fromTo(".f05-copy-a", { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.6);      tl.fromTo(
+        ".f05-hl-bar",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.4, ease: "power2.out" },
+        1.75
+      );
+
+      // Scene 2 — the hub seats, then three edges draw on to three workers; each
+      // worker pops as its own edge lands, and its clean-context tag follows.
+      tl.fromTo(
+        ".f05-hub-g",
+        { opacity: 0, scale: 0, svgOrigin: "150 298" },
+        { opacity: 1, scale: 1, duration: 0.45, ease: "power3.out" },
+        2.0
+      );
+
+      var inHalves = [
+        { draw: 2.45, edge: 0, head: 0, dur: 0.55 },
+        { draw: 2.75, edge: 1, head: 1, dur: 0.55 },
+        { draw: 3.05, edge: 2, head: 2, dur: 0.55 }
+      ];
+      inHalves.forEach(function (s, i) {
+        tl.fromTo(
+          edges[s.edge],
+          { strokeDashoffset: edgeLen[s.edge] },
+          { strokeDashoffset: 0, duration: s.dur, ease: "power2.out" },
+          s.draw
+        );
+        tl.fromTo(heads[s.head], { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, s.draw + s.dur);
+      });
+
+      var workerGroups = [".f05-w1-g", ".f05-w2-g", ".f05-w3-g"];
+      var workerOrigins = ["590 108", "590 298", "590 488"];
+      var workerStarts = [3.05, 3.35, 3.65];
+      workerGroups.forEach(function (sel, i) {
+        tl.fromTo(
+          sel,
+          { opacity: 0, scale: 0, svgOrigin: workerOrigins[i] },
+          { opacity: 1, scale: 1, duration: 0.42, ease: "power3.out" },
+          workerStarts[i]
+        );
+      });
+      tl.fromTo(
+        tags,
+        { opacity: 0, y: 5 },
+        { opacity: 0.62, y: 0, duration: 0.34, ease: "power2.out", stagger: 0.18 },
+        3.6
+      );
+
+      // Scene 3 — the three workers converge on one variable; the convergence
+      // carries the frame's single coral bloom.
+      var outHalves = [
+        { draw: 5.6, edge: 3, head: 3, dur: 0.6 },
+        { draw: 5.78, edge: 4, head: 4, dur: 0.6 },
+        { draw: 5.96, edge: 5, head: 5, dur: 0.6 }
+      ];
+      outHalves.forEach(function (s) {
+        tl.fromTo(
+          edges[s.edge],
+          { strokeDashoffset: edgeLen[s.edge] },
+          { strokeDashoffset: 0, duration: s.dur, ease: "power2.out" },
+          s.draw
+        );
+        tl.fromTo(heads[s.head], { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, s.draw + s.dur);
+      });
+      tl.fromTo(
+        ".f05-collect-g",
+        { opacity: 0, scale: 0, svgOrigin: "1035 298" },
+        { opacity: 1, scale: 1, duration: 0.45, ease: "power3.out" },
+        6.3
+      );
+      tl.fromTo(
+        ".f05-glow",
+        { opacity: 0, scale: 0.86 },
+        { opacity: 0.32, scale: 1, duration: 0.85, ease: "power2.out" },
+        6.45
+      );
+
+      // Scene 4 — the legend reads out and the coral claim lands; then the frame
+      // holds still (a held read beats bad motion).
+      tl.fromTo(".f05-legend", { opacity: 0, y: 8 }, { opacity: 0.6, y: 0, duration: 0.4, ease: "power2.out" }, 7.4);
+      tl.fromTo(
+        ".f05-copy-b",
+        { opacity: 0, y: 6 },
+        { opacity: 0.66, y: 0, duration: 0.45, ease: "power2.out" },
+        7.85
+      );
+
+      tl.seek(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-what-it-spawns"] = tl;
+    })();
+  </script>
+</template>

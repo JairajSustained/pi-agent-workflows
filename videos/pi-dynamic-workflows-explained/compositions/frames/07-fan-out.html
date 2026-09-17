@@ -1,0 +1,297 @@
+<template>
+  <style>
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-700.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-700.woff2") format("woff2");}
+
+    #root{position:relative;width:1920px;height:1080px;overflow:hidden;container-type:size;color:#FAF9F5;font-family:"Inter",sans-serif}
+    .clip{position:absolute;inset:0}
+
+    .f07-rail{position:absolute;left:80px;top:72px;font-family:"JetBrains Mono",monospace;font-size:28px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;opacity:.55}
+    .f07-rail b{font-weight:400;color:#CC785C}
+
+    .f07-panelA{position:absolute;left:80px;top:130px}
+    .f07-panelB{position:absolute;left:80px;top:462px}
+
+    .f07-foot{position:absolute;left:80px;top:802px;width:1760px;font-family:"JetBrains Mono",monospace;font-size:24px;font-weight:400;letter-spacing:.02em;opacity:.55}
+    .f07-copy{position:absolute;left:80px;top:846px;width:1760px;font-size:32px;font-weight:400;line-height:1.4;opacity:.8}
+    .f07-copy em{font-style:normal;font-family:"JetBrains Mono",monospace;color:#FAF9F5;opacity:1}
+
+    /* — graph atoms: node = navy-elev card + cream@14% hairline; edges = 1px hairlines — */
+    .f07-node{fill:#252320;stroke:rgba(250,249,245,.14);stroke-width:1}
+    .f07-node-t{fill:#FAF9F5;font-family:"JetBrains Mono",monospace;font-size:24px;font-weight:400}
+    .f07-sub{fill:#FAF9F5;opacity:.55;font-family:"JetBrains Mono",monospace;font-size:20px;font-weight:400}
+    .f07-head-fn{fill:#FAF9F5;font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;letter-spacing:.02em}
+    .f07-head-arg{fill:#5DB8A6;font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400}
+    .f07-head-desc{fill:#FAF9F5;opacity:.55;font-family:"JetBrains Mono",monospace;font-size:24px;font-weight:400}
+    .f07-edge{fill:none;stroke:rgba(250,249,245,.32);stroke-width:1}
+    .f07-edge-dash{fill:none;stroke:rgba(250,249,245,.32);stroke-width:1;stroke-dasharray:5 6}
+    .f07-band-solid{fill:none;stroke:rgba(250,249,245,.20);stroke-width:1}
+    .f07-band-dash{fill:none;stroke:rgba(250,249,245,.20);stroke-width:1;stroke-dasharray:6 6}
+    .f07-band-t{fill:#FAF9F5;opacity:.5;font-family:"JetBrains Mono",monospace;font-size:21px;font-weight:400}
+    /* the ONE coral voltage of this frame: the barrier */
+    .f07-bar-solid{fill:none;stroke:#CC785C;stroke-width:1}
+    .f07-bar-dash{fill:none;stroke:#CC785C;stroke-width:1.5;stroke-dasharray:7 7}
+    .f07-bar-t{fill:#CC785C;font-family:"JetBrains Mono",monospace;font-size:23px;font-weight:400}
+    .f07-bar-sub{fill:#CC785C;opacity:.85;font-family:"JetBrains Mono",monospace;font-size:19px;font-weight:400}
+    .f07-arrow{fill:rgba(250,249,245,.5)}
+  </style>
+
+  <div data-hf-id="hf-u4cg" id="root" data-composition-id="07-fan-out" data-start="0" data-duration="9" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-4eq8" class="clip f07-bg" data-start="0" data-duration="9" data-track-index="0" style="background:#181715"></div>
+
+    <div data-hf-id="hf-ogpv" id="f07-rail" class="f07-rail">✱ 07 · <b data-hf-id="hf-aiud">two shapes</b></div>
+
+    <!-- ══════════ PANEL A — parallel([...]) : fan out, wait at the barrier ══════════ -->
+    <svg data-hf-id="hf-ofaw" class="f07-panelA" width="1760" height="316" viewBox="0 0 1760 316" xmlns="http://www.w3.org/2000/svg">
+      <text data-hf-id="hf-c2b1" id="f07-a-head-fn" class="f07-head-fn" x="0" y="26">parallel<tspan data-hf-id="hf-xfmr" class="f07-head-arg">([...])</tspan></text>
+      <text data-hf-id="hf-gm8l" id="f07-a-head-desc" class="f07-head-desc" x="305" y="26">run a batch, wait at the barrier</text>
+
+      <!-- edges, source → agents (solid hairlines; each draws on) -->
+      <g data-hf-id="hf-vera">
+        <line data-hf-id="hf-czrv" id="f07-a-e1" class="f07-edge" x1="300" y1="170" x2="440" y2="88" />
+        <line data-hf-id="hf-c7ji" id="f07-a-e2" class="f07-edge" x1="300" y1="170" x2="440" y2="170" />
+        <line data-hf-id="hf-lmrw" id="f07-a-e3" class="f07-edge" x1="300" y1="170" x2="440" y2="252" />
+      </g>
+      <!-- arrowheads: the placement transform lives on the wrapper <g> so GSAP only ever
+           touches the inner path's own transform (no attribute/CSS transform conflict) -->
+      <g data-hf-id="hf-y9ms" transform="translate(440,88) rotate(-30.36)"><path data-hf-id="hf-yryx" id="f07-a-h1" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+      <g data-hf-id="hf-glir" transform="translate(440,170) rotate(0)"><path data-hf-id="hf-2q2y" id="f07-a-h2" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+      <g data-hf-id="hf-3dnw" transform="translate(440,252) rotate(30.36)"><path data-hf-id="hf-8vsr" id="f07-a-h3" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+
+      <!-- edges, agents → barrier (three entry points on the barrier's left edge) -->
+      <g data-hf-id="hf-pwpm">
+        <line data-hf-id="hf-7ahz" id="f07-a-e4" class="f07-edge" x1="680" y1="88" x2="806" y2="152" />
+        <line data-hf-id="hf-0hhk" id="f07-a-e5" class="f07-edge" x1="680" y1="170" x2="806" y2="170" />
+        <line data-hf-id="hf-7757" id="f07-a-e6" class="f07-edge" x1="680" y1="252" x2="806" y2="188" />
+      </g>
+      <g data-hf-id="hf-cy97" transform="translate(806,152) rotate(26.93)"><path data-hf-id="hf-leb8" id="f07-a-h4" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+      <g data-hf-id="hf-jla1" transform="translate(806,170) rotate(0)"><path data-hf-id="hf-m5z1" id="f07-a-h5" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+      <g data-hf-id="hf-2hwj" transform="translate(806,188) rotate(-26.93)"><path data-hf-id="hf-q432" id="f07-a-h6" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+
+      <!-- source node (hero) -->
+      <g data-hf-id="hf-m9tj" id="f07-a-src">
+        <rect data-hf-id="hf-ju0b" class="f07-node" x="0" y="122" width="300" height="96" rx="8" />
+        <text data-hf-id="hf-uerj" class="f07-node-t" x="150" y="178" text-anchor="middle">parallel([...])</text>
+      </g>
+
+      <!-- three workers -->
+      <g data-hf-id="hf-zbb0" id="f07-a-n1">
+        <rect data-hf-id="hf-1rpf" class="f07-node" x="440" y="56" width="240" height="64" rx="8" />
+        <text data-hf-id="hf-9zv7" class="f07-node-t" x="560" y="96" text-anchor="middle">scan-auth</text>
+      </g>
+      <g data-hf-id="hf-a6sn" id="f07-a-n2">
+        <rect data-hf-id="hf-ne12" class="f07-node" x="440" y="138" width="240" height="64" rx="8" />
+        <text data-hf-id="hf-kvyp" class="f07-node-t" x="560" y="178" text-anchor="middle">scan-billing</text>
+      </g>
+      <g data-hf-id="hf-68om" id="f07-a-n3">
+        <rect data-hf-id="hf-wavq" class="f07-node" x="440" y="220" width="240" height="64" rx="8" />
+        <text data-hf-id="hf-u96e" class="f07-node-t" x="560" y="260" text-anchor="middle">scan-jobs</text>
+      </g>
+
+      <!-- the barrier: draws on solid, then resolves into its dashed register -->
+      <rect data-hf-id="hf-uix0" id="f07-a-bar-solid" class="f07-bar-solid" x="806" y="122" width="224" height="96" rx="8" />
+      <rect data-hf-id="hf-n0zg" id="f07-a-bar-dash" class="f07-bar-dash" x="806" y="122" width="224" height="96" rx="8" />
+      <text data-hf-id="hf-fjrg" id="f07-a-bar-t" class="f07-bar-t" x="918" y="166" text-anchor="middle">barrier</text>
+      <text data-hf-id="hf-dlg0" id="f07-a-bar-sub" class="f07-bar-sub" x="918" y="194" text-anchor="middle">waits for all</text>
+
+      <!-- edge into the synthesis -->
+      <line data-hf-id="hf-uvop" id="f07-a-e7" class="f07-edge" x1="1030" y1="170" x2="1156" y2="170" />
+      <g data-hf-id="hf-3ac2" transform="translate(1156,170) rotate(0)"><path data-hf-id="hf-u273" id="f07-a-h7" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+
+      <g data-hf-id="hf-azmf" id="f07-a-synth">
+        <rect data-hf-id="hf-r6xs" class="f07-node" x="1156" y="122" width="380" height="96" rx="8" />
+        <text data-hf-id="hf-yqt7" class="f07-node-t" x="1346" y="178" text-anchor="middle">synthesize → report</text>
+      </g>
+    </svg>
+
+    <!-- ══════════ PANEL B — pipeline(items, stage1, stage2) : items in flight ══════════ -->
+    <svg data-hf-id="hf-u0jz" class="f07-panelB" width="1760" height="330" viewBox="0 0 1760 330" xmlns="http://www.w3.org/2000/svg">
+      <text data-hf-id="hf-xp9o" id="f07-b-head-fn" class="f07-head-fn" x="0" y="26">pipeline<tspan data-hf-id="hf-4awo" class="f07-head-arg">(items, stage1, stage2)</tspan></text>
+      <text data-hf-id="hf-q74m" id="f07-b-head-desc" class="f07-head-desc" x="575" y="26">every item through every stage</text>
+
+      <!-- stage bands: solid hairline draws on, dashed register resolves over it -->
+      <rect data-hf-id="hf-fz30" id="f07-b-band1-solid" class="f07-band-solid" x="420" y="60" width="300" height="240" rx="12" />
+      <rect data-hf-id="hf-lzlc" id="f07-b-band1-dash" class="f07-band-dash" x="420" y="60" width="300" height="240" rx="12" />
+      <text data-hf-id="hf-2zk3" id="f07-b-band1-t" class="f07-band-t" x="570" y="88" text-anchor="middle">stage 1</text>
+      <rect data-hf-id="hf-2wwv" id="f07-b-band2-solid" class="f07-band-solid" x="800" y="60" width="300" height="240" rx="12" />
+      <rect data-hf-id="hf-fcql" id="f07-b-band2-dash" class="f07-band-dash" x="800" y="60" width="300" height="240" rx="12" />
+      <text data-hf-id="hf-ggsp" id="f07-b-band2-t" class="f07-band-t" x="950" y="88" text-anchor="middle">stage 2</text>
+
+      <!-- item C → stage 1 (draws on, then resolves dashed: waiting, not yet in flight) -->
+      <line data-hf-id="hf-efnd" id="f07-b-e1" class="f07-edge" x1="240" y1="240" x2="420" y2="240" />
+      <line data-hf-id="hf-k8g1" id="f07-b-e1-dash" class="f07-edge-dash" x1="240" y1="240" x2="420" y2="240" />
+      <g data-hf-id="hf-c7m3" transform="translate(420,240) rotate(0)"><path data-hf-id="hf-2ta8" id="f07-b-h1" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+
+      <!-- item B → item A (stage 1 → stage 2) -->
+      <line data-hf-id="hf-uk5f" id="f07-b-e2" class="f07-edge" x1="680" y1="240" x2="840" y2="140" />
+      <g data-hf-id="hf-rkoi" transform="translate(840,140) rotate(-32)"><path data-hf-id="hf-bh63" id="f07-b-h2" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+
+      <!-- item A → result -->
+      <line data-hf-id="hf-jq2z" id="f07-b-e3" class="f07-edge" x1="1080" y1="140" x2="1220" y2="140" />
+      <g data-hf-id="hf-6q0p" transform="translate(1220,140) rotate(0)"><path data-hf-id="hf-7j22" id="f07-b-h3" class="f07-arrow" d="M -12 -6 L 0 0 L -12 6 z" /></g>
+
+      <g data-hf-id="hf-3tre" id="f07-b-itemC">
+        <rect data-hf-id="hf-gpxj" class="f07-node" x="0" y="210" width="240" height="60" rx="8" />
+        <text data-hf-id="hf-h852" class="f07-node-t" x="120" y="248" text-anchor="middle">item C</text>
+        <text data-hf-id="hf-oooj" class="f07-sub" x="120" y="292" text-anchor="middle">queued</text>
+      </g>
+      <g data-hf-id="hf-7rvf" id="f07-b-itemB">
+        <rect data-hf-id="hf-bn4v" class="f07-node" x="440" y="210" width="240" height="60" rx="8" />
+        <text data-hf-id="hf-3ik9" class="f07-node-t" x="560" y="248" text-anchor="middle">item B</text>
+        <text data-hf-id="hf-569s" class="f07-sub" x="560" y="292" text-anchor="middle">in stage 1</text>
+      </g>
+      <g data-hf-id="hf-z3zk" id="f07-b-itemA">
+        <rect data-hf-id="hf-6fdc" class="f07-node" x="840" y="110" width="240" height="60" rx="8" />
+        <text data-hf-id="hf-r0l3" class="f07-node-t" x="960" y="148" text-anchor="middle">item A</text>
+        <text data-hf-id="hf-7yci" class="f07-sub" x="960" y="192" text-anchor="middle">already in stage 2</text>
+      </g>
+
+      <g data-hf-id="hf-umix" id="f07-b-result">
+        <rect data-hf-id="hf-rlw0" class="f07-node" x="1220" y="110" width="300" height="60" rx="8" />
+        <text data-hf-id="hf-opvu" class="f07-node-t" x="1370" y="148" text-anchor="middle">exit → result</text>
+      </g>
+    </svg>
+
+    <div data-hf-id="hf-11u3" id="f07-foot" class="f07-foot">item A finishes while item B is still mid-flight — the chain, not the sum of stages</div>
+    <div data-hf-id="hf-ju4a" id="f07-copy" class="f07-copy">Loop, filter, retry in plain JS — <em data-hf-id="hf-qc2p">free.</em></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var root = document.getElementById("root");
+      function el(id) {
+        return root.querySelector("#" + id);
+      }
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ── motion primitives ──────────────────────────────────────────────────
+      // svg-path-draw: measure the geometry, make the whole path one dash, then
+      // tween strokeDashoffset to 0. fromTo applies the hidden from-state at
+      // build time, so the tween is correct under frame-by-frame seek.
+      function draw(id, at, dur) {
+        var node = el(id);
+        var len = node.getTotalLength();
+        node.style.strokeDasharray = len + " " + len;
+        node.style.strokeDashoffset = String(len);
+        tl.fromTo(node, { strokeDashoffset: len }, { strokeDashoffset: 0, duration: dur, ease: "power2.out" }, at);
+        return at + dur;
+      }
+
+      // spring-pop-entrance: smooth long-tail settle, no overshoot (no bounce).
+      function pop(id, at, dur, rise) {
+        tl.fromTo(
+          el(id),
+          { opacity: 0, scale: 0.94, y: rise === undefined ? 10 : rise, transformOrigin: "50% 50%" },
+          { opacity: 1, scale: 1, y: 0, duration: dur, ease: "power3.out" },
+          at
+        );
+      }
+
+      // label reveal — same settle, no scale (type must not squash).
+      function reveal(id, at, dur, rise) {
+        tl.fromTo(
+          el(id),
+          { opacity: 0, y: rise === undefined ? 8 : rise },
+          { opacity: 1, y: 0, duration: dur, ease: "power2.out" },
+          at
+        );
+      }
+
+      // an arrowhead lands with its edge, never before it (grows from its tip)
+      function arrow(id, at) {
+        tl.fromTo(
+          el(id),
+          { opacity: 0, scale: 0.6, transformOrigin: "0% 50%" },
+          { opacity: 1, scale: 1, duration: 0.28, ease: "power3.out" },
+          at
+        );
+      }
+
+      function fadeIn(id, at, dur, to) {
+        tl.fromTo(el(id), { opacity: 0 }, { opacity: to === undefined ? 1 : to, duration: dur, ease: "power2.out" }, at);
+      }
+
+      // dim a solid stroke once its dashed register has resolved over it
+      function settleTo(id, at, dur, to) {
+        tl.fromTo(el(id), { opacity: 1 }, { opacity: to, duration: dur, ease: "power2.out" }, at);
+      }
+
+      // ══ Scene 1 (0.0–3.2s) — panel A builds: source, three agents, all onto the barrier
+      reveal("f07-rail", 0, 0.35, 6);
+      pop("f07-a-src", 0.05, 0.35, 8); // hero on screen by 0.40s
+      reveal("f07-a-head-fn", 0.10, 0.4, 8);
+      reveal("f07-a-head-desc", 0.26, 0.4, 8);
+
+      // source → agent edges, staggered (each starts ~70% into the previous draw)
+      draw("f07-a-e1", 0.55, 0.5);
+      draw("f07-a-e2", 0.90, 0.5);
+      draw("f07-a-e3", 1.25, 0.5);
+      arrow("f07-a-h1", 1.03);
+      arrow("f07-a-h2", 1.38);
+      arrow("f07-a-h3", 1.73);
+      pop("f07-a-n1", 1.03, 0.4, 8);
+      pop("f07-a-n2", 1.38, 0.4, 8);
+      pop("f07-a-n3", 1.73, 0.4, 8);
+
+      // agent → barrier edges converge inward
+      draw("f07-a-e4", 1.95, 0.4);
+      draw("f07-a-e5", 2.10, 0.4);
+      draw("f07-a-e6", 2.25, 0.4);
+      arrow("f07-a-h4", 2.33);
+      arrow("f07-a-h5", 2.48);
+      arrow("f07-a-h6", 2.63);
+
+      // the barrier draws on, then resolves into its dashed register
+      draw("f07-a-bar-solid", 2.70, 0.5);
+      fadeIn("f07-a-bar-dash", 3.14, 0.3, 1);
+      settleTo("f07-a-bar-solid", 3.14, 0.3, 0.32);
+      reveal("f07-a-bar-t", 3.06, 0.35, 6);
+
+      // ══ Scene 2 (3.2–4.6s) — the barrier is the focal: its promise, then the handoff
+      reveal("f07-a-bar-sub", 3.40, 0.4, 6);
+      draw("f07-a-e7", 3.70, 0.45);
+      arrow("f07-a-h7", 4.13);
+      pop("f07-a-synth", 4.14, 0.42, 8);
+
+      // ══ Scene 3 (4.6–7.4s) — panel B builds: bands, items in flight, the moving chain
+      reveal("f07-b-head-fn", 4.70, 0.4, 8);
+      reveal("f07-b-head-desc", 4.86, 0.4, 8);
+
+      draw("f07-b-band1-solid", 5.05, 0.45);
+      draw("f07-b-band2-solid", 5.22, 0.45);
+      fadeIn("f07-b-band1-dash", 5.48, 0.28, 1);
+      fadeIn("f07-b-band2-dash", 5.65, 0.28, 1);
+      settleTo("f07-b-band1-solid", 5.48, 0.28, 0.5);
+      settleTo("f07-b-band2-solid", 5.65, 0.28, 0.5);
+      reveal("f07-b-band1-t", 5.34, 0.32, 5);
+      reveal("f07-b-band2-t", 5.51, 0.32, 5);
+
+      pop("f07-b-itemC", 5.75, 0.4, 8);
+      pop("f07-b-itemB", 6.05, 0.4, 8);
+      pop("f07-b-itemA", 6.35, 0.4, 8);
+
+      draw("f07-b-e1", 6.55, 0.3);
+      fadeIn("f07-b-e1-dash", 6.84, 0.24, 1);
+      settleTo("f07-b-e1", 6.84, 0.24, 0.45);
+      draw("f07-b-e2", 6.85, 0.3);
+      draw("f07-b-e3", 7.05, 0.3);
+      arrow("f07-b-h1", 6.83);
+      arrow("f07-b-h2", 7.13);
+      arrow("f07-b-h3", 7.33);
+      pop("f07-b-result", 7.20, 0.38, 8);
+
+      // ══ Scene 4 (7.4–9.0s) — the read, then stillness
+      reveal("f07-foot", 7.72, 0.45, 8);
+      reveal("f07-copy", 7.96, 0.45, 8);
+      // 8.4s → 9.0s: the resolved frame holds. Nothing moves.
+
+      window.__timelines["07-fan-out"] = tl;
+    })();
+  </script>
+</template>

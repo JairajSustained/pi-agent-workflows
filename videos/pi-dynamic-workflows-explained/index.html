@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #FAF9F5;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-rhmo" id="root" data-composition-id="main" data-start="0" data-duration="91" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-wd9n" id="el-01-no-room" class="scene" data-composition-id="01-no-room" data-composition-src="compositions/frames/01-no-room.html" data-start="0" data-duration="6.5" data-track-index="0"></div>
+
+      <div data-hf-id="hf-on7j" id="el-02-one-head" class="scene" data-composition-id="02-one-head" data-composition-src="compositions/frames/02-one-head.html" data-start="6" data-duration="8.5" data-track-index="1"></div>
+
+      <div data-hf-id="hf-z19w" id="el-03-plan-in-code" class="scene" data-composition-id="03-plan-in-code" data-composition-src="compositions/frames/03-plan-in-code.html" data-start="14" data-duration="8.5" data-track-index="0"></div>
+
+      <div data-hf-id="hf-otsk" id="el-04-the-script" class="scene" data-composition-id="04-the-script" data-composition-src="compositions/frames/04-the-script.html" data-start="22" data-duration="9.5" data-track-index="1"></div>
+
+      <div data-hf-id="hf-28d2" id="el-05-what-it-spawns" class="scene" data-composition-id="05-what-it-spawns" data-composition-src="compositions/frames/05-what-it-spawns.html" data-start="31" data-duration="9.5" data-track-index="0"></div>
+
+      <div data-hf-id="hf-r64g" id="el-06-what-comes-back" class="scene" data-composition-id="06-what-comes-back" data-composition-src="compositions/frames/06-what-comes-back.html" data-start="40" data-duration="8.5" data-track-index="1"></div>
+
+      <div data-hf-id="hf-09s6" id="el-07-fan-out" class="scene" data-composition-id="07-fan-out" data-composition-src="compositions/frames/07-fan-out.html" data-start="48" data-duration="9" data-track-index="0"></div>
+
+      <div data-hf-id="hf-16u2" id="el-08-verification" class="scene" data-composition-id="08-verification" data-composition-src="compositions/frames/08-verification.html" data-start="57" data-duration="9.5" data-track-index="1"></div>
+
+      <div data-hf-id="hf-9gnt" id="el-09-real-run" class="scene" data-composition-id="09-real-run" data-composition-src="compositions/frames/09-real-run.html" data-start="66" data-duration="9.5" data-track-index="0"></div>
+
+      <div data-hf-id="hf-nbco" id="el-10-cost-and-resume" class="scene" data-composition-id="10-cost-and-resume" data-composition-src="compositions/frames/10-cost-and-resume.html" data-start="75" data-duration="9" data-track-index="1"></div>
+
+      <div data-hf-id="hf-z50g" id="el-11-landing" class="scene" data-composition-id="11-landing" data-composition-src="compositions/frames/11-landing.html" data-start="84" data-duration="7" data-track-index="0"></div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      // ── frame transitions (injected by transitions.mjs) ──
+      (function () { var tl = window.__timelines["main"];
+        tl.to("#el-01-no-room", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 6);
+        tl.fromTo("#el-02-one-head", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 6);
+        tl.to("#el-02-one-head", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 14);
+        tl.fromTo("#el-03-plan-in-code", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 14);
+        tl.to("#el-03-plan-in-code", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 22);
+        tl.fromTo("#el-04-the-script", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 22);
+        tl.to("#el-04-the-script", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 31);
+        tl.fromTo("#el-05-what-it-spawns", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 31);
+        tl.to("#el-05-what-it-spawns", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 40);
+        tl.fromTo("#el-06-what-comes-back", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 40);
+        tl.to("#el-06-what-comes-back", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 48);
+        tl.fromTo("#el-07-fan-out", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 48);
+        tl.to("#el-08-verification", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 66);
+        tl.fromTo("#el-09-real-run", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 66);
+        tl.to("#el-09-real-run", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 75);
+        tl.fromTo("#el-10-cost-and-resume", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 75);
+        tl.to({}, { duration: 91 }, 0); // full-span anchor — main.duration() == composition total (Studio master duration)
+      })();
+    </script>
+  </body>
+</html>

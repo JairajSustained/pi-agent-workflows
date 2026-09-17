@@ -1,0 +1,172 @@
+<template>
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+
+    /* the full-bleed ground rides on the .clip layer below, never on #root */
+    #root{
+      position:relative;
+      width:1920px;
+      height:1080px;
+      overflow:hidden;
+      container-type:size;
+      color:#141413;
+      font-family:"Inter",sans-serif;
+    }
+    .clip{position:absolute;inset:0}
+
+    /* ── chrome: kicker-spike (ink, muted) + mono footer ───────────────── */
+    .nr1-kicker{
+      position:absolute;
+      left:80px;
+      top:72px;
+      font-family:"JetBrains Mono",monospace;
+      font-size:28px;
+      font-weight:400;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:#141413;
+      opacity:.55;
+    }
+
+    /* ── the two display lines (EB Garamond 400, sentence case) ────────── */
+    .nr1-l1,.nr1-l2{
+      position:absolute;
+      left:80px;
+      width:1760px;
+      font-family:"EB Garamond",Georgia,serif;
+      font-weight:400;
+      font-size:79.7px;      /* fallback for the cqw step below */
+      font-size:4.15cqw;     /* 79.7px @1920 — fits the ≤78cqw measure */
+      line-height:1.06;
+      letter-spacing:-.018em;
+      color:#141413;
+    }
+    .nr1-l1{top:300px}
+    .nr1-l2{top:500px}
+
+    /* per-word reveal units — inline-block so each word can carry its own entrance */
+    .nr1-w{
+      display:inline-block;
+      transform-origin:50% 70%;
+      will-change:transform;
+    }
+    /* line 2's two chunks: the clause, then the coral question */
+    .nr1-pre{display:inline-block;margin-right:.26em}
+    .nr1-coral{
+    opacity: 0;
+      display:inline-block;
+      transform-origin:0% 70%;
+      will-change:transform;
+      color:#CC785C;
+    }
+
+    /* ── section rule (1px, ink@20%) — drawn left→right ────────────────── */
+    .nr1-rule{
+      position:absolute;
+      left:80px;
+      top:700px;
+      width:640px;
+      height:1px;
+      background:rgba(20,20,19,.2);
+      transform-origin:left center;
+    }
+
+    /* ── mono footer chrome ───────────────────────────────────────────── */
+    .nr1-foot{
+      position:absolute;
+      left:80px;
+      top:790px;
+      font-family:"JetBrains Mono",monospace;
+      font-size:26px;
+      font-weight:400;
+      letter-spacing:.02em;
+      color:#141413;
+      opacity:.6;
+    }
+  </style>
+
+  <div data-hf-id="hf-ugyy" id="root" data-composition-id="01-no-room" data-start="0" data-duration="6.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-uaq2" class="clip" data-start="0" data-duration="6.5" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-9noc" class="nr1-kicker" id="nr1-kicker">✱ 01 · hook</div>
+
+    <div data-hf-id="hf-q0zv" class="nr1-l1"><span data-hf-id="hf-baqd" class="nr1-w" id="nr1-w1">Your</span> <span data-hf-id="hf-3awi" class="nr1-w" id="nr1-w2">agent</span> <span data-hf-id="hf-hxjc" class="nr1-w" id="nr1-w3">has</span> <span data-hf-id="hf-upqy" class="nr1-w" id="nr1-w4">a</span> <span data-hf-id="hf-iuqs" class="nr1-w" id="nr1-w5">limited</span> <span data-hf-id="hf-j46s" class="nr1-w" id="nr1-w6">context</span> <span data-hf-id="hf-4s8i" class="nr1-w" id="nr1-w7">window.</span></div>
+
+    <div data-hf-id="hf-hd40" class="nr1-l2"><span data-hf-id="hf-q7jz" class="nr1-pre" id="nr1-pre">So why make it do </span><span data-hf-id="hf-onrh" class="nr1-coral" id="nr1-coral">all the work?</span></div>
+
+    <div data-hf-id="hf-ociy" class="nr1-rule" id="nr1-rule"></div>
+
+    <div data-hf-id="hf-0ylb" class="nr1-foot" id="nr1-foot">one head · turn by turn · everything lands back in it</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // ── ONE tempo grid drives every word (kinetic-beat-slam) ─────────────
+    // 0.08s sub-beat, first word at 0.20s so the hero line is visible by t <= 0.5s.
+    const BEATS = [0.2, 0.28, 0.36, 0.44, 0.52, 0.6, 0.68];
+
+    // Scene 1 — line one sets word by word, left -> right, each phrase group
+    // with its own entrance axis and its own ease (no reused helper).
+    const WORDS = [
+      { id: "#nr1-w1", from: { opacity: 0, scale: 1.14, filter: "blur(8px)" },
+        to:   { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "power4.out" } },
+      { id: "#nr1-w2", from: { opacity: 0, x: -18 },
+        to:   { opacity: 1, x: 0, duration: 0.42, ease: "expo.out" } },
+      { id: "#nr1-w3", from: { opacity: 0, x: -18 },
+        to:   { opacity: 1, x: 0, duration: 0.42, ease: "expo.out" } },
+      { id: "#nr1-w4", from: { opacity: 0, y: 18 },
+        to:   { opacity: 1, y: 0, duration: 0.45, ease: "circ.out" } },
+      { id: "#nr1-w5", from: { opacity: 0, y: 18 },
+        to:   { opacity: 1, y: 0, duration: 0.45, ease: "circ.out" } },
+      { id: "#nr1-w6", from: { opacity: 0, y: 22, scale: 0.985 },
+        to:   { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" } },
+      { id: "#nr1-w7", from: { opacity: 0, y: 22, scale: 0.985 },
+        to:   { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" } },
+    ];
+    WORDS.forEach((w, i) => tl.fromTo(w.id, w.from, w.to, BEATS[i]));
+
+    // Kicker is quiet chrome — a small settle, not a beat.
+    tl.fromTo("#nr1-kicker",
+      { opacity: 0, y: 8 },
+      { opacity: 0.55, y: 0, duration: 0.5, ease: "power2.out" },
+      0.1);
+
+    // Scene 2 — the clause lands first (power3.out settle)…
+    tl.fromTo("#nr1-pre",
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+      2.45);
+
+    // …then the coral question SNAPS in on the next beat: a hard cut, not a
+    // fade (a 10ms ramp — under one frame, so it reads as an instant swap; the
+    // explicit from-state keeps it hidden until its cue under seek), followed
+    // by one small scale pulse anchored at its own left edge, so it reads as
+    // snapping into the slot rather than inflating in the middle of the line.
+    tl.fromTo("#nr1-coral",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.01, ease: "none", immediateRender: false },
+      3.45);
+    tl.fromTo("#nr1-coral",
+      { scale: 1.045 },
+      { scale: 1, duration: 0.5, ease: "power3.out", immediateRender: false },
+      3.45);
+
+    // Scene 3 — the hairline rule draws left -> right, then the mono footer
+    // fades up as supporting chrome, and the frame holds still to the end.
+    tl.fromTo("#nr1-rule",
+      { scaleX: 0 },
+      { scaleX: 1, duration: 0.5, ease: "power2.out" },
+      4.45);
+
+    tl.fromTo("#nr1-foot",
+      { opacity: 0, y: 10 },
+      { opacity: 0.6, y: 0, duration: 0.5, ease: "power1.out" },
+      5.15);
+
+    window.__timelines["01-no-room"] = tl;
+  </script>
+</template>

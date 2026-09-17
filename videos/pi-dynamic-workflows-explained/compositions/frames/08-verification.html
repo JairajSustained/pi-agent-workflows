@@ -1,0 +1,242 @@
+<template>
+  <style>
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-700.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-700.woff2") format("woff2");}
+
+    #root{
+      container-type:size;
+      position:relative;width:1920px;height:1080px;overflow:hidden;
+      background:#FAF9F5;color:#141413;font-family:Inter,system-ui,sans-serif;
+    }
+    .clip{position:absolute;inset:0}
+
+    /* — chrome — */
+    .vfy-kicker{position:absolute;left:80px;top:72px;display:flex;align-items:center;gap:14px;
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:500;letter-spacing:.16em;
+      text-transform:uppercase;color:#141413}
+    .vfy-spike{flex:0 0 auto;color:#CC785C}
+    .vfy-spike svg{display:block;width:22px;height:22px}
+    .vfy-spike path{stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+
+    /* editorial divider between the board column and the rail */
+    .vfy-rule{position:absolute;left:1254px;top:170px;width:1px;height:470px;
+      background:rgba(20,20,19,.12);transform-origin:50% 0%}
+
+    /* — findings board (focal) — */
+    .vfy-board{position:absolute;left:80px;top:170px;width:1150px}
+    .vfy-row{display:flex;align-items:center;gap:22px;background:#EFE9DE;
+      border:1px solid rgba(20,20,19,.12);border-radius:12px;padding:22px 26px;margin-bottom:16px}
+    .vfy-title{position:relative;flex:1;font-family:Inter,system-ui,sans-serif;font-size:1.5cqw;
+      line-height:1.25;color:#141413}
+
+    /* the drawn strike — animatable, replaces a CSS line-through */
+    /* the host wraps only the text so the drawn strike spans the words, not the flex cell */
+    .vfy-strike-host{position:relative;display:inline-block}
+    .vfy-strike{position:absolute;left:-2px;right:-2px;top:50%;height:2px;background:rgba(20,20,19,.45);
+      transform:scaleX(0);transform-origin:0% 50%}
+
+    /* — verdict chips — */
+    .vfy-slot{position:relative;flex:0 0 auto;width:232px;height:40px}
+    .vfy-slot .vfy-chip{position:absolute;inset:0}
+    .vfy-chip{display:flex;align-items:center;justify-content:center;gap:10px;
+      border-radius:999px;border:1px solid rgba(20,20,19,.25);padding:0 16px;
+      font-family:"JetBrains Mono",monospace;font-size:1.4cqw;letter-spacing:.02em;color:#141413;
+      transform-origin:50% 50%}
+    .vfy-chip--ok{color:#2F6F5E;border-color:rgba(47,111,94,.4)}
+    .vfy-chip--ref{color:#A8563C;border-color:rgba(204,120,92,.6)}
+    .vfy-chip--ref .vfy-check{display:none}
+    /* the incoming refuted chip of row 2 sits above the outgoing confirmed one */
+    #vfy-flip-in{z-index:2}
+
+    /* success-check mechanism (ring + drawn tick), restyled to the preset */
+    .vfy-check{flex:0 0 auto;display:grid;place-items:center;width:26px;height:26px;border-radius:999px;
+      background:rgba(47,111,94,.12);color:#2F6F5E}
+    .vfy-check svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:5;
+      stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 50%;
+      transform:rotate(var(--vfy-rot,0deg)) scale(var(--vfy-scale,1));
+      filter:blur(var(--vfy-blur,0px))}
+    .vfy-check circle{opacity:.3}
+    .vfy-check path{stroke-dasharray:36;stroke-dashoffset:var(--vfy-dash,36)}
+
+    /* — skeptic row (the refutation) — */
+    .vfy-skeptic{display:flex;align-items:center;gap:22px;padding:18px 26px;margin-left:44px;
+      margin-bottom:16px;border:1px dashed rgba(204,120,92,.7);border-radius:12px;color:#CC785C}
+    .vfy-skeptic .vfy-title{color:#A8563C}
+
+    /* — report bar — */
+    .vfy-report{position:absolute;left:80px;top:720px;width:1150px;background:#181715;color:#FAF9F5;
+      border-radius:12px;padding:26px 30px;font-family:"JetBrains Mono",monospace;font-size:1.5cqw;
+      line-height:1.5;transform-origin:50% 50%}
+    .vfy-report em{font-style:normal;color:#5DB8A6;display:inline-block}
+
+    /* — side rail — */
+    .vfy-side{position:absolute;left:1300px;top:170px;width:540px}
+    .vfy-eyebrow{display:flex;align-items:center;gap:12px;font-family:"JetBrains Mono",monospace;
+      font-size:26px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#CC785C;
+      margin-bottom:22px}
+    .vfy-eyebrow svg{display:block;width:22px;height:22px}
+    .vfy-eyebrow path{stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+    .vfy-quiet{font-family:Inter,system-ui,sans-serif;font-size:1.4cqw;line-height:1.45;color:#141413}
+    .vfy-lock{margin-top:34px;font-family:"JetBrains Mono",monospace;font-size:1.2cqw;line-height:1.7;
+      color:#141413;opacity:.65}
+
+    /* — silent-cut script strip — */
+    .vfy-copy{position:absolute;left:80px;top:840px;width:1760px;display:flex;align-items:baseline;gap:14px;
+      font-family:"JetBrains Mono",monospace;font-size:1.4cqw;line-height:1.5;color:#141413}
+    .vfy-cue{display:inline-block;opacity:.72}
+    .vfy-cue.vfy-cue--strong{opacity:1}
+    .vfy-dot{display:inline-block;opacity:.5}
+  </style>
+
+  <div data-hf-id="hf-5z9e" id="root" data-composition-id="08-verification" data-start="0" data-duration="9.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-tz3z" class="clip" data-start="0" data-duration="9.5" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-9bem" class="vfy-kicker" id="vfy-kicker">
+      <span data-hf-id="hf-4pvy" class="vfy-spike" aria-hidden="true"><svg data-hf-id="hf-ulu9" viewBox="0 0 24 24"><path data-hf-id="hf-gryw" d="M12 3.2V20.8M4.4 7.6l15.2 8.8M19.6 7.6 4.4 16.4" /></svg></span>
+      <span data-hf-id="hf-tub5">08 · the part you can't skip</span>
+    </div>
+
+    <div data-hf-id="hf-ug8a" class="vfy-rule" id="vfy-rule"></div>
+
+    <div data-hf-id="hf-4r0i" class="vfy-board" id="vfy-board">
+      <div data-hf-id="hf-l1vb" class="vfy-row" id="vfy-row1">
+        <div data-hf-id="hf-ttkp" class="vfy-title">unvalidated redirect in auth callback</div>
+        <div data-hf-id="hf-4u9n" data-layout-allow-overlap class="vfy-chip vfy-chip--ok" id="vfy-chip1">
+          <span data-hf-id="hf-pk90" class="vfy-check" id="vfy-check1"><svg data-hf-id="hf-l6o9" viewBox="0 0 64 64"><circle data-hf-id="hf-mb9z" cx="32" cy="32" r="27" /><path data-hf-id="hf-n9ew" d="M20 33.5l8 8L45 23" /></svg></span>
+          <span data-hf-id="hf-gyky">confirmed</span>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-a6do" class="vfy-row" id="vfy-row2">
+        <div data-hf-id="hf-bl5m" class="vfy-title" id="vfy-title2"><span data-hf-id="hf-hb6m" class="vfy-strike-host">SQL string built from user input<span data-hf-id="hf-xm43" class="vfy-strike" id="vfy-strike"></span></span></div>
+        <div data-hf-id="hf-pn6u" class="vfy-slot">
+          <div data-hf-id="hf-3uy2" class="vfy-chip vfy-chip--ok" id="vfy-flip-out">
+            <span data-hf-id="hf-0fqn" class="vfy-check" id="vfy-check2"><svg data-hf-id="hf-tsl9" viewBox="0 0 64 64"><circle data-hf-id="hf-h47r" cx="32" cy="32" r="27" /><path data-hf-id="hf-517k" d="M20 33.5l8 8L45 23" /></svg></span>
+            <span data-hf-id="hf-3aza">confirmed</span>
+          </div>
+          <div data-hf-id="hf-7bmk" class="vfy-chip vfy-chip--ref" id="vfy-flip-in"><span data-hf-id="hf-vmli">refuted</span></div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-mlak" class="vfy-skeptic" id="vfy-skeptic">
+        <div data-hf-id="hf-67bn" class="vfy-title">skeptic re-read the code: parameterized upstream</div>
+        <div data-hf-id="hf-jvot" class="vfy-chip vfy-chip--ref"><span data-hf-id="hf-rnhm">refuted</span></div>
+      </div>
+
+      <div data-hf-id="hf-d5n9" class="vfy-row" id="vfy-row3">
+        <div data-hf-id="hf-t0bv" class="vfy-title">missing rate limit on login</div>
+        <div data-hf-id="hf-wy1l" class="vfy-chip vfy-chip--ok" id="vfy-chip3">
+          <span data-hf-id="hf-ua0u" class="vfy-check" id="vfy-check3"><svg data-hf-id="hf-uzic" viewBox="0 0 64 64"><circle data-hf-id="hf-gpwq" cx="32" cy="32" r="27" /><path data-hf-id="hf-3uah" d="M20 33.5l8 8L45 23" /></svg></span>
+          <span data-hf-id="hf-3pab">confirmed</span>
+        </div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-h9om" class="vfy-report" id="vfy-report">report: <em data-hf-id="hf-paja" id="vfy-survive">2 findings survive</em> · 1 refuted and dropped</div>
+
+    <div data-hf-id="hf-6s3a" class="vfy-side" id="vfy-side">
+      <div data-hf-id="hf-c1jc" class="vfy-eyebrow" id="vfy-eyebrow">
+        <span data-hf-id="hf-nq45" aria-hidden="true"><svg data-hf-id="hf-1tol" viewBox="0 0 24 24"><path data-hf-id="hf-p59s" d="M12 3.2V20.8M4.4 7.6l15.2 8.8M19.6 7.6 4.4 16.4" /></svg></span>
+        <span data-hf-id="hf-afjw">adversarial verification</span>
+      </div>
+      <div data-hf-id="hf-fhco" class="vfy-quiet" id="vfy-quiet">Not because the model remembered to.</div>
+      <div data-hf-id="hf-jbnr" class="vfy-lock" id="vfy-lock">verdicts[0..n] -&gt; skeptics[0..n]<br data-hf-id="hf-x5px">control flow, not a request</div>
+    </div>
+
+    <div data-hf-id="hf-jb96" class="vfy-copy" id="vfy-copy">
+      <span data-hf-id="hf-w4t9" class="vfy-cue" id="vfy-cue1">A second agent tries to refute every finding.</span>
+      <span data-hf-id="hf-l7ly" class="vfy-dot" id="vfy-dot">·</span>
+      <span data-hf-id="hf-c3r9" class="vfy-cue vfy-cue--strong" id="vfy-cue2">Verification runs because the script sequences it.</span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var tl = gsap.timeline({ paused: true });
+
+      /* Scene 1 (0.0–3.4s) — the board lands, one row per beat; each confirm ring pops as its row settles.
+         Silent cut: reveals pace to the reading beat of the copy cues, never to a voiceover. */
+      tl.fromTo("#vfy-kicker", { opacity: 0, y: -8 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.0);
+
+      tl.fromTo("#vfy-rule", { scaleY: 0 },
+        { scaleY: 1, duration: 0.6, ease: "power2.out" }, 0.1);
+
+      /* rows fade + slide in as a staggered cascade (gsap-effects form sanctioned for row groups) */
+      tl.fromTo("#vfy-row1", { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.15);
+      tl.fromTo("#vfy-row2", { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.1);
+      tl.fromTo("#vfy-row3", { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.15);
+
+      /* the confirm ring pops its check the moment its row settles (success-check mechanism,
+         restyled: power3 settle, no overshoot — the preset's motion register) */
+      function popCheck(halo, svg, path, at) {
+        /* halo + tick arrive together; the tick then draws itself (svg-path-draw) */
+        tl.fromTo(halo, { opacity: 0, scale: 0.72 },
+          { opacity: 1, scale: 1, duration: 0.34, ease: "power3.out", transformOrigin: "50% 50%" }, at);
+        tl.fromTo(svg, { "--vfy-rot": "-12deg", "--vfy-blur": "5px" },
+          { "--vfy-rot": "0deg", "--vfy-blur": "0px", duration: 0.34, ease: "power3.out" }, at);
+        tl.fromTo(path, { "--vfy-dash": 36 },
+          { "--vfy-dash": 0, duration: 0.42, ease: "power2.out" }, at + 0.1);
+      }
+      popCheck("#vfy-check1", "#vfy-check1 svg", "#vfy-check1 path", 0.6);
+      popCheck("#vfy-check2", "#vfy-check2 svg", "#vfy-check2 path", 1.54);
+      popCheck("#vfy-check3", "#vfy-check3 svg", "#vfy-check3 path", 2.58);
+
+      tl.fromTo("#vfy-cue1", { opacity: 0, x: -10 },
+        { opacity: 0.72, x: 0, duration: 0.45, ease: "power3.out" }, 0.55);
+
+      /* Scene 2 (3.4–5.4s) — the flip: confirmed -> refuted, the row desaturates, the title strikes
+         through, the row drops, then the frame BREATHES for a beat before the skeptic row arrives. */
+      tl.to("#vfy-flip-out",
+        { opacity: 0, scale: 0.78, duration: 0.3, ease: "power2.in" }, 3.55);
+      tl.fromTo("#vfy-flip-in",
+        { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 3.7);
+
+      /* desaturate the surfaces and mute the title, but keep the coral refuted chip legible —
+         the voltage must survive the death of the finding */
+      tl.to("#vfy-row2", {
+        backgroundColor: "rgba(20,20,19,0.03)",
+        borderColor: "rgba(20,20,19,0.07)",
+        duration: 0.4, ease: "power2.out"
+      }, 3.85);
+      tl.to("#vfy-title2", { color: "rgba(20,20,19,0.5)", duration: 0.4, ease: "power2.out" }, 3.85);
+
+      tl.fromTo("#vfy-strike", { scaleX: 0 },
+        { scaleX: 1, duration: 0.42, ease: "power2.out" }, 4.0);
+
+      tl.to("#vfy-row2", { y: 14, duration: 0.45, ease: "power3.out" }, 4.3);
+
+      /* the breath — 4.75–4.95s holds completely still */
+      tl.fromTo("#vfy-skeptic", { opacity: 0, x: -28 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 4.95);
+
+      /* Scene 3 (5.4–7.2s) — the report bar lands and hands the verdict to the script strip */
+      tl.fromTo("#vfy-report", { opacity: 0, y: 22, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" }, 5.55);
+      tl.fromTo("#vfy-survive", { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 6.05);
+      tl.fromTo("#vfy-dot", { opacity: 0 },
+        { opacity: 0.5, duration: 0.3, ease: "power2.out" }, 6.15);
+      tl.fromTo("#vfy-cue2", { opacity: 0, x: -10 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 6.2);
+
+      /* Scene 4 (7.2–9.0s) — the rail states the claim, then holds still to the end */
+      tl.fromTo("#vfy-eyebrow", { opacity: 0, x: 12 },
+        { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 7.25);
+      tl.fromTo("#vfy-quiet", { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.7);
+      tl.fromTo("#vfy-lock", { opacity: 0, y: 10 },
+        { opacity: 0.65, y: 0, duration: 0.4, ease: "power3.out" }, 8.15);
+
+      window.__timelines["08-verification"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,318 @@
+<template>
+  <!--
+    Frame 10 — What it costs, what resume buys (1920x1080, 9s, silent cut)
+
+    Built on the user-approved wireframe: kicker top-left · two equal cards as a
+    50/50 split · copy strip at the foot. Placement, hierarchy and copy are the
+    approved ones; this pass dresses them and adds the motion.
+
+    Blueprint `comparison-split` (Adapt) — signature kept: the mirrored
+    opposite-wing arrival of two equal-weight cards (the motion IS the symmetry).
+    Changed, because frame.md's ceiling is explicit ("no heavy drop shadow, no
+    glow, no gradient on content, or tilt — hairline elevation only"):
+      - dropped the blueprint's 3D rotateY "book-open" tilt and its tilt-matched
+        outward shadows  -> replaced by a pure x-arrival + counter-scale settle
+      - dropped the two ambient side-glow blooms and the inner-edge badge pops
+        (the approved wireframe carries no badges)
+    Coral discipline: the meter fill is this frame's ONE coral voltage moment;
+    every other element is ink / cream / tile / navy. The coral ✱ is the
+    preset's brand chrome (spike-mark, "always coral"), present in every frame.
+
+    Motion is paced to the READING BEAT of the two copy cues (silent cut: no
+    voiceover, no caption track, so the copy: lines ARE the on-screen text).
+    No idle float, no yoyo/repeat — the back half keeps landing reveals, then holds.
+  -->
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+
+    #root{
+      position:relative;
+      width:1920px;
+      height:1080px;
+      overflow:hidden;
+      container-type:size;                 /* frame-relative units are cqw against this */
+      color:#141413;
+      font-family:"Inter",sans-serif;
+    }
+    /* contract selector — .clip and #root stay unprefixed */
+    .clip{position:absolute;inset:0}
+
+    /* ── chrome ───────────────────────────────────────────────────────────── */
+    .f10-kicker{
+      position:absolute;left:80px;top:72px;
+      font-family:"JetBrains Mono",monospace;font-size:1.46cqw;font-weight:400;
+      letter-spacing:.16em;text-transform:uppercase;color:#141413;
+    }
+    .f10-kicker .f10-spike{color:#CC785C}
+    .f10-rule{
+      position:absolute;left:80px;top:124px;width:1760px;height:1px;
+      background:rgba(20,20,19,.12);transform-origin:left center;
+    }
+
+    /* ── the comparison pair ──────────────────────────────────────────────── */
+    .f10-card{
+      position:absolute;top:170px;height:620px;width:820px;
+      display:flex;flex-direction:column;
+      background:#EFE9DE;
+      border:1px solid rgba(20,20,19,.12);
+      border-radius:12px;
+      padding:38px 40px 36px;
+      box-shadow:0 1px 3px rgba(20,20,19,.08),0 4px 16px rgba(20,20,19,.04);
+    }
+    .f10-card-left{left:80px}
+    .f10-card-right{left:1020px}
+
+    .f10-cardhead{
+      font-family:"JetBrains Mono",monospace;font-size:1.35cqw;font-weight:400;
+      letter-spacing:.16em;text-transform:uppercase;color:rgba(20,20,19,.6);
+      margin-bottom:30px;
+    }
+    .f10-body{
+      font-size:1.72cqw;line-height:1.5;color:rgba(20,20,19,.72);
+      max-width:100%;
+    }
+    .f10-body .f10-claim{display:block;margin-top:6px;color:#141413}
+
+    /* the hairline separator above each card's instrument, anchored to the card foot */
+    .f10-cardsplit{
+      margin-top:auto;margin-bottom:30px;height:1px;
+      background:rgba(20,20,19,.12);
+    }
+
+    /* ── the cost meter (left card) — the frame's ONE coral moment ────────── */
+    .f10-meter{
+      height:56px;border:1px solid rgba(20,20,19,.2);border-radius:9999px;
+      padding:6px;
+    }
+    .f10-fill{
+      width:100%;height:100%;                 /* width:100% REQUIRED — a zero-width fill scales to nothing */
+      background:#CC785C;border-radius:9999px;
+      transform-origin:left center;
+    }
+    .f10-meterlabel{
+      margin-top:18px;display:flex;justify-content:space-between;align-items:baseline;
+    }
+    .f10-meterfloor{
+      font-family:"JetBrains Mono",monospace;font-size:1.35cqw;
+      color:rgba(20,20,19,.5);white-space:nowrap;
+    }
+    .f10-meterlockup{display:flex;align-items:baseline;gap:.4cqw}
+    .f10-meterfigure{
+      font-family:"EB Garamond",serif;font-size:2.6cqw;line-height:1;
+      letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#141413;
+    }
+    .f10-meterunit{
+      font-family:"JetBrains Mono",monospace;font-size:1.35cqw;
+      color:rgba(20,20,19,.55);
+    }
+
+    /* ── the resume timeline (right card) — this frame's focal ───────────── */
+    .f10-timeline{display:flex;gap:12px}
+    .f10-seg{
+      position:relative;
+      width:238px;height:96px;border-radius:8px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      font-family:"JetBrains Mono",monospace;font-size:1.35cqw;line-height:1.45;
+      text-align:center;
+    }
+    .f10-seg-cached{background:rgba(20,20,19,.06);border:1px solid rgba(20,20,19,.14);color:rgba(20,20,19,.55)}
+    .f10-seg-live{background:#181715;border:1px solid rgba(250,249,245,.14);color:#FAF9F5}
+    .f10-seg-live .f10-seglive{color:rgba(250,249,245,.72)}
+    /* the pre-resume state: a veil over a cached segment, cross-faded off at its flip
+       (declarative — opacity only, no JS callback, so the render is seek-safe) */
+    .f10-segveil{
+      position:absolute;inset:-1px;border-radius:8px;
+      display:grid;place-items:center;
+      background:#EFE9DE;border:1px dashed rgba(20,20,19,.35);color:rgba(20,20,19,.5);
+    }
+    .f10-segstate{display:block}
+    .f10-segnote{
+      margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:1.35cqw;
+      color:rgba(20,20,19,.6);
+    }
+
+    /* ── the script line (silent cut: this is the on-screen text) ─────────── */
+    .f10-copy{
+      position:absolute;left:80px;top:836px;width:1760px;
+      font-size:1.4cqw;line-height:1.6;color:rgba(20,20,19,.62);
+    }
+    .f10-copy .f10-copyclaim{color:#141413}
+  </style>
+
+  <div data-hf-id="hf-1uph" id="root" data-composition-id="10-cost-and-resume" data-start="0" data-duration="9" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-197x" class="clip" data-start="0" data-duration="9" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-u5qs" class="f10-kicker"><span data-hf-id="hf-4nki" class="f10-spike">✱</span> 10 · the trade</div>
+    <div data-hf-id="hf-6qdo" class="f10-rule"></div>
+
+    <div data-hf-id="hf-5nay" class="f10-card f10-card-left">
+      <div data-hf-id="hf-a6g3" class="f10-cardhead">what it costs</div>
+      <div data-hf-id="hf-3xhi" class="f10-body">Every agent is a full session.<span data-hf-id="hf-vpg1" class="f10-claim">A workflow costs more than a chat turn.</span></div>
+      <div data-hf-id="hf-pfs8" class="f10-cardsplit"></div>
+      <div data-hf-id="hf-2asx" class="f10-meter"><div data-hf-id="hf-s66l" class="f10-fill"></div></div>
+      <div data-hf-id="hf-8jhl" class="f10-meterlabel">
+        <span data-hf-id="hf-vr8c" class="f10-meterfloor">2,000 tokens</span>
+        <span data-hf-id="hf-apg8" class="f10-meterlockup">
+          <span data-hf-id="hf-6tir" class="f10-meterfigure" id="f10-value">0</span><span data-hf-id="hf-4yja" class="f10-meterunit">tokens</span>
+        </span>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-yts9" class="f10-card f10-card-right">
+      <div data-hf-id="hf-zyxk" class="f10-cardhead">what resume buys</div>
+      <div data-hf-id="hf-nn2g" class="f10-body">Label agents deterministically.<span data-hf-id="hf-pllm" class="f10-claim">Resume replays finished work for free.</span></div>
+      <div data-hf-id="hf-pcm8" class="f10-cardsplit"></div>
+      <div data-hf-id="hf-i9t7" class="f10-timeline">
+        <div data-hf-id="hf-1at7" class="f10-seg f10-seg-cached"><span data-hf-id="hf-gvtb" class="f10-segstate" data-layout-allow-overlap>cached<br data-hf-id="hf-x5px">$0.0000</span><div data-hf-id="hf-ksr9" class="f10-segveil" data-layout-allow-overlap><span data-hf-id="hf-124g" class="f10-segstate" data-layout-allow-overlap>queued</span></div></div>
+        <div data-hf-id="hf-olvf" class="f10-seg f10-seg-cached"><span data-hf-id="hf-c9wv" class="f10-segstate" data-layout-allow-overlap>cached<br data-hf-id="hf-rsrt">$0.0000</span><div data-hf-id="hf-ezex" class="f10-segveil" data-layout-allow-overlap><span data-hf-id="hf-xeyg" class="f10-segstate" data-layout-allow-overlap>queued</span></div></div>
+        <div data-hf-id="hf-lgq3" class="f10-seg f10-seg-live"><span data-hf-id="hf-2mcu" class="f10-segstate" data-layout-allow-overlap>resume</span><span data-hf-id="hf-l24m" class="f10-segstate f10-seglive" data-layout-allow-overlap>runs live</span></div>
+      </div>
+      <div data-hf-id="hf-2wqs" class="f10-segnote">run 1 failed on agent 3 · run 2 executed 1 agent</div>
+    </div>
+
+    <div data-hf-id="hf-lvn1" class="f10-copy">
+      <span data-hf-id="hf-lrpa" class="f10-copyline">Every agent is a full session</span>
+      <span data-hf-id="hf-8g10" class="f10-copyclaim"> · label agents deterministically and resume replays finished work for free</span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // ── Scene 1 (0.0–3.4s): the pair seats, the cost argument lands, the meter fills
+    // ✱ spike-mark beat — fades + scales 0.92→1, never spins
+    tl.fromTo(".f10-kicker", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.0);
+    tl.fromTo(".f10-spike", { scale: 0.92, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.45, ease: "power3.out" }, 0.0);
+    tl.fromTo(".f10-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 0.25);
+
+    // Signature move (adapted): EQUAL cards arrive from OPPOSITE wings, 0.27s apart,
+    // as one arrival — no 3D tilt (frame.md bans it), counter-scale settles the pair.
+    tl.fromTo(
+      ".f10-card-left",
+      { x: -320, scale: 0.96, opacity: 0 },
+      { x: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+      0.25
+    );
+    tl.fromTo(
+      ".f10-card-right",
+      { x: 320, scale: 0.96, opacity: 0 },
+      { x: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+      0.52
+    );
+
+    // card chrome (mono heads) rides the pair's settle
+    tl.fromTo(
+      ".f10-cardhead",
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.1 },
+      1.15
+    );
+
+    // left card's claim — copy cue 1 begins
+    tl.fromTo(
+      ".f10-card-left .f10-body",
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+      1.5
+    );
+    tl.fromTo(
+      ".f10-card-left .f10-claim",
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+      1.76
+    );
+    tl.fromTo(".f10-card-left .f10-cardsplit", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 2.0);
+
+    // the meter: track + scale labels, then fill and number land TOGETHER
+    tl.fromTo(
+      ".f10-meter, .f10-meterlabel",
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.08 },
+      2.05
+    );
+
+    const FILL_AT = 2.3;
+    const FILL_DUR = 0.95;
+    const FILL_EASE = "power2.out";           // shared by fill + counter so they resolve as one beat
+    tl.fromTo(
+      ".f10-fill",
+      { scaleX: 0 },
+      { scaleX: 1, duration: FILL_DUR, ease: FILL_EASE },
+      FILL_AT
+    );
+    const valueEl = document.getElementById("f10-value");
+    const counterState = { value: 0 };
+    const TARGET_TOKENS = 45330;
+    tl.to(
+      counterState,
+      {
+        value: TARGET_TOKENS,
+        duration: FILL_DUR,
+        ease: FILL_EASE,
+        onUpdate: function () {
+          valueEl.textContent = Math.round(counterState.value).toLocaleString();
+        },
+      },
+      FILL_AT
+    );
+
+    // ── Scene 2 (3.4–6.0s): the mitigation — claim, then the timeline seats and flips
+    tl.fromTo(
+      ".f10-card-right .f10-body",
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+      3.55
+    );
+    tl.fromTo(
+      ".f10-card-right .f10-claim",
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+      3.81
+    );
+    tl.fromTo(".f10-card-right .f10-cardsplit", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 4.05);
+
+    // Three segments seat in order: the two cached ones arrive wearing their dashed
+    // "queued" veil, the live one seats in navy. (The approved wireframe's landed state.)
+    tl.fromTo(".f10-seg", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.16 }, 4.4);
+
+    // …then the queued pair SNAP to greyed cached — the veil cross-fades off and reveals
+    // the cached fill with its $0.0000 cost line. Opacity only, no callbacks.
+    tl.to(".f10-segveil", { opacity: 0, duration: 0.34, ease: "power2.out", stagger: 0.3 }, 5.15);
+
+    // the live segment's sub-label lands last in this scene
+    tl.fromTo(
+      ".f10-seg-live .f10-seglive",
+      { opacity: 0, y: 8 },
+      { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+      5.55
+    );
+
+    // ── Scene 3 (6.0–7.6s): the evidence line
+    tl.fromTo(
+      ".f10-segnote",
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+      6.1
+    );
+
+    // ── Scene 4 (7.6–9.0s): the script line lands on its two reading cues, then holds
+    tl.fromTo(
+      ".f10-copyline",
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+      7.55
+    );
+    tl.fromTo(
+      ".f10-copyclaim",
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+      8.0
+    );
+
+    window.__timelines["10-cost-and-resume"] = tl;
+    tl.seek(0);
+  </script>
+</template>

@@ -1,0 +1,284 @@
+<template>
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+
+    #root{
+      position:relative;width:1920px;height:1080px;overflow:hidden;
+      container-type:size;
+      background:#FAF9F5;color:#141413;
+      font-family:"Inter",sans-serif;
+      font-variant-numeric:tabular-nums;
+      -webkit-font-smoothing:antialiased;
+    }
+    .clip{position:absolute;inset:0}
+
+    /* ── chrome ──────────────────────────────────────────────── */
+    .f09-kicker{
+      position:absolute;left:80px;top:72px;
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;
+      letter-spacing:.16em;text-transform:uppercase;color:rgba(20,20,19,.62);
+    }
+    .f09-spike{color:#CC785C}
+
+    /* ── run-record card: the recorded artifact ──────────────── */
+    .f09-card{
+      position:absolute;left:80px;top:170px;width:960px;
+      background:#EFE9DE;border:1px solid rgba(20,20,19,.12);border-radius:12px;
+      box-shadow:0 1px 3px rgba(20,20,19,.08),0 4px 16px rgba(20,20,19,.04);
+      padding:28px 32px;
+    }
+    .f09-row{
+      display:flex;justify-content:space-between;align-items:baseline;
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;
+      padding:11px 0;border-bottom:1px solid rgba(20,20,19,.08);
+    }
+    .f09-row:last-child{border-bottom:none}
+    .f09-key{color:rgba(20,20,19,.55)}
+    .f09-status{color:#2F6F5E;display:inline-block;transform-origin:100% 60%}
+
+    /* ── Scene 2: the two real inputs + the connector ────────── */
+    .f09-nums{
+      position:absolute;left:80px;top:520px;width:960px;
+      display:flex;align-items:flex-end;gap:28px;
+    }
+    .f09-col{display:block}
+    .f09-n{
+      /* reserved width in the FIGURE's own ch, so the count never reflows the row */
+      display:inline-block;min-width:6ch;text-align:left;
+      font-family:"EB Garamond",serif;font-size:132px;font-weight:400;
+      line-height:1;letter-spacing:-.025em;color:#141413;
+      transform-origin:0% 60%;
+    }
+    .f09-plus,.f09-eq{
+      display:inline-block;padding-bottom:20px;
+      font-family:"JetBrains Mono",monospace;font-size:56px;font-weight:400;
+      color:rgba(20,20,19,.4);transform-origin:50% 60%;
+    }
+    .f09-nlabel{
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;
+      color:rgba(20,20,19,.55);margin-top:12px;
+    }
+
+    /* ── Scene 3: the resolved total — the frame's focal ─────── */
+    .f09-total{
+      position:absolute;left:80px;top:740px;width:1760px;
+      font-family:"EB Garamond",serif;font-size:96px;font-weight:400;
+      line-height:1.1;letter-spacing:-.02em;color:#141413;white-space:nowrap;
+    }
+    .f09-totalfig{
+      display:inline-block;min-width:6ch;text-align:left;
+      font-family:"EB Garamond",serif;color:#CC785C;transform-origin:0% 60%;
+    }
+    .f09-unit{
+      font-family:"JetBrains Mono",monospace;font-size:40px;font-weight:400;
+      color:rgba(20,20,19,.62);margin:0 18px 0 14px;letter-spacing:.01em;
+    }
+    .f09-qual{
+      font-family:"Inter",sans-serif;font-size:34px;font-weight:400;
+      color:rgba(20,20,19,.6);
+    }
+
+    /* ── Scene 4: the side rail's proof ──────────────────────── */
+    .f09-side{position:absolute;left:1130px;top:170px;width:710px}
+    .f09-sidehead{
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;
+      letter-spacing:.16em;text-transform:uppercase;color:#CC785C;margin-bottom:24px;
+    }
+    .f09-sidenote{font-family:"Inter",sans-serif;font-size:36px;line-height:1.45;color:rgba(20,20,19,.8)}
+    .f09-strong{color:#141413}
+    .f09-sub{display:block;margin-top:16px;font-size:28px;line-height:1.5;color:rgba(20,20,19,.58)}
+    .f09-real{
+      margin-top:40px;background:#181715;color:#FAF9F5;
+      border:1px solid rgba(250,249,245,.14);border-radius:12px;padding:26px 30px;
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;line-height:1.7;
+    }
+    .f09-check{color:#5DB8A6}
+
+    /* ── the silent cut's on-screen copy ─────────────────────── */
+    .f09-copy{
+      position:absolute;left:80px;top:862px;width:1760px;
+      font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:400;
+      color:rgba(20,20,19,.72);
+    }
+    .f09-copy em{font-style:normal;color:rgba(20,20,19,.95)}
+  </style>
+
+  <div data-hf-id="hf-mvrw" id="root" data-composition-id="09-real-run" data-start="0" data-duration="9.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-tz3z" class="clip" data-start="0" data-duration="9.5" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-k7ez" class="f09-kicker"><span data-hf-id="hf-4epc" class="f09-spike">✱</span> 09 · a real run</div>
+
+    <div data-hf-id="hf-12ca" class="f09-card">
+      <div data-hf-id="hf-41i4" class="f09-row"><span data-hf-id="hf-pzo4" class="f09-key">run id</span><span data-hf-id="hf-dj6g">wf-2026-09-17T17-58</span></div>
+      <div data-hf-id="hf-izro" class="f09-row"><span data-hf-id="hf-x3nl" class="f09-key">name</span><span data-hf-id="hf-gn0y">pine-oak-join</span></div>
+      <div data-hf-id="hf-hsul" class="f09-row"><span data-hf-id="hf-thb8" class="f09-key">status</span><span data-hf-id="hf-i56o" class="f09-status">complete</span></div>
+      <div data-hf-id="hf-i75m" class="f09-row"><span data-hf-id="hf-8ub8" class="f09-key">agents</span><span data-hf-id="hf-hdrd">2</span></div>
+      <div data-hf-id="hf-k6or" class="f09-row"><span data-hf-id="hf-50zs" class="f09-key">wall clock</span><span data-hf-id="hf-ahub">4.5s</span></div>
+    </div>
+
+    <div data-hf-id="hf-rwv7" class="f09-nums">
+      <span data-hf-id="hf-7idx" class="f09-col">
+        <span data-hf-id="hf-fl6w" class="f09-n" id="f09-n1">0</span>
+        <span data-hf-id="hf-0ye4" class="f09-nlabel">input tokens · pine-agent</span>
+      </span>
+      <span data-hf-id="hf-c3di" class="f09-plus">+</span>
+      <span data-hf-id="hf-cwsp" class="f09-col">
+        <span data-hf-id="hf-ym3d" class="f09-n" id="f09-n2">0</span>
+        <span data-hf-id="hf-9h7v" class="f09-nlabel">input tokens · oak-agent</span>
+      </span>
+      <span data-hf-id="hf-ijy6" class="f09-eq">=</span>
+    </div>
+
+    <div data-hf-id="hf-h3dy" class="f09-total"><span data-hf-id="hf-txe5" class="f09-totalfig" id="f09-total">0</span><span data-hf-id="hf-73ql" class="f09-unit">tokens</span><span data-hf-id="hf-kv3g" class="f09-qual">for two words</span></div>
+
+    <div data-hf-id="hf-ic5d" class="f09-side">
+      <div data-hf-id="hf-zdx8" class="f09-sidehead"><span data-hf-id="hf-3u2p" class="f09-spike">✱</span> proof, then the bill</div>
+      <div data-hf-id="hf-2csx" class="f09-sidenote">
+        <span data-hf-id="hf-fs61" data-f09-rail="">Two agents. One word each.</span><br data-hf-id="hf-x5px">
+        <span data-hf-id="hf-qw4o" class="f09-strong" data-f09-rail="">4.5 seconds.</span>
+        <span data-hf-id="hf-jkg9" class="f09-sub" data-f09-rail="">A synchronous run would have taken twice as long and taught you nothing about the cost.</span>
+      </div>
+      <div data-hf-id="hf-at5y" class="f09-real" id="f09-real">
+        <div data-hf-id="hf-0586" data-f09-proof="">agents ran in parallel <span data-hf-id="hf-r0hc" class="f09-check">✓</span></div>
+        <div data-hf-id="hf-br9w" data-f09-proof="">each agent = a full session <span data-hf-id="hf-7u2w" class="f09-check">✓</span></div>
+        <div data-hf-id="hf-x6vq" data-f09-proof="">number is real, not rounded</div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-q58t" class="f09-copy">A real run from the repo. · <em data-hf-id="hf-h43o">Two agents · one word each · 4.5 seconds.</em></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var FPS = 30;
+      var root = document.getElementById("root");
+      var tl = gsap.timeline({ paused: true });
+      var countEase = gsap.parseEase("power2.inOut");
+
+      // counting-dynamic-scale: the value eases A→B while transform scale grows
+      // to the final size (font-size stays static; only the transform animates).
+      // Every integer is precomputed at 30fps and applied with tl.set, so any
+      // seek — including a reverse seek — shows the same value with no reflow.
+      function countRows(from, to, duration) {
+        var steps = Math.max(1, Math.round(duration * FPS));
+        var rows = [];
+        for (var i = 0; i <= steps; i += 1) {
+          var eased = countEase(i / steps);
+          rows.push(Math.round(from + (to - from) * eased).toLocaleString("en-US"));
+        }
+        return rows;
+      }
+
+      function scheduleCount(element, from, to, duration, at) {
+        var rows = countRows(from, to, duration);
+        var span = Math.max(1, rows.length - 1);
+        element.textContent = rows[0];
+        rows.forEach(function (row, i) {
+          tl.set(element, { textContent: row }, at + duration * (i / span));
+        });
+      }
+
+      // ── Scene 1 (0.0–2.6s): the record seats, its five mono rows reveal in order
+      tl.fromTo(".f09-kicker",
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0);
+
+      tl.fromTo(".f09-card",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.1);
+
+      gsap.utils.toArray(".f09-row").forEach(function (row, i) {
+        tl.fromTo(row,
+          { opacity: 0, x: -10 },
+          { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 0.55 + i * 0.42);
+      });
+
+      // `complete` lands in the preset's success tone with a restrained settle
+      tl.fromTo(".f09-status",
+        { opacity: 0, scale: 0.94 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 1.55);
+
+      // chrome that establishes the right column early (quiet, not payload)
+      tl.fromTo(".f09-sidehead",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.9);
+
+      tl.fromTo(".f09-copy",
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.9);
+
+      // ── Scene 2 (2.6–5.6s): both inputs count up to their real value
+      // the columns arrive on their own beat, so the frame opens on the record
+      // alone (no idle zeros sitting on canvas from t=0)
+      gsap.utils.toArray(".f09-col").forEach(function (col, i) {
+        tl.fromTo(col,
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.42 + i * 0.16);
+      });
+
+      tl.fromTo(".f09-plus",
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 2.55);
+
+      tl.fromTo("#f09-n1", { scale: 0.965 }, { scale: 1, duration: 1.35, ease: "power2.out" }, 2.75);
+      scheduleCount(document.getElementById("f09-n1"), 0, 22646, 1.35, 2.75);
+
+      tl.fromTo("#f09-n2", { scale: 0.965 }, { scale: 1, duration: 1.35, ease: "power2.out" }, 3.05);
+      scheduleCount(document.getElementById("f09-n2"), 0, 22646, 1.35, 3.05);
+
+      gsap.utils.toArray(".f09-nlabel").forEach(function (label, i) {
+        tl.fromTo(label,
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 2.7 + i * 0.3);
+      });
+
+      tl.fromTo(".f09-eq",
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 4.45);
+
+      // ── Scene 3 (5.6–7.2s): the honest total counts, lands, and holds as the focal
+      tl.fromTo("#f09-total",
+        { opacity: 0, scale: 0.94 },
+        { opacity: 1, scale: 1, duration: 1.05, ease: "power3.out" }, 5.75);
+      scheduleCount(document.getElementById("f09-total"), 0, 45330, 1.05, 5.75);
+
+      // the one restrained landing pulse, after the count resolves
+      tl.to("#f09-total", { scale: 1.025, duration: 0.13, ease: "power3.out" }, 6.8);
+      tl.to("#f09-total", { scale: 1, duration: 0.13, ease: "power2.out" }, 6.93);
+
+      tl.fromTo(".f09-unit",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 6.78);
+
+      tl.fromTo(".f09-qual",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 6.95);
+
+      // ── Scene 4 (7.2–9.0s): the side rail's proof lines arrive last, then hold
+      gsap.utils.toArray("[data-f09-rail]").forEach(function (line, i) {
+        tl.fromTo(line,
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.25 + i * 0.4);
+      });
+
+      tl.fromTo("#f09-real",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 8.05);
+
+      gsap.utils.toArray("[data-f09-proof]").forEach(function (line, i) {
+        tl.fromTo(line,
+          { opacity: 0, y: 6 },
+          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 8.15 + i * 0.2);
+      });
+
+      // held read to the cut — no exit tween (the root transition owns the exit)
+      tl.seek(0);
+      window.__timelines["09-real-run"] = tl;
+    })();
+  </script>
+</template>

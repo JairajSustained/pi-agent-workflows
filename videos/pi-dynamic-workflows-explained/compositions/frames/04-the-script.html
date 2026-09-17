@@ -1,0 +1,219 @@
+<template>
+  <style>
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+    #root{position:relative;width:1920px;height:1080px;overflow:hidden;background:#181715;color:#FAF9F5;font-family:Inter,system-ui,sans-serif;container-type:size}
+    .clip{position:absolute;inset:0}
+    /* ── ambient field (background layer, deliberately faint) ───────────────── */
+    .hf04-swell{position:absolute;left:-260px;top:-320px;width:2440px;height:1720px;
+      background:radial-gradient(closest-side at 50% 44%, rgba(250,249,245,.055) 0%, rgba(250,249,245,.022) 46%, rgba(250,249,245,0) 100%)}
+    /* ── kicker-spike chrome ────────────────────────────────────────────────── */
+    .hf04-rail{position:absolute;left:80px;top:72px;font-family:"JetBrains Mono",monospace;font-size:26px;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,249,245,.6)}
+    .hf04-rail .hf04-spike{color:#CC785C}
+    .hf04-rail .hf04-file{color:#FAF9F5}
+    /* ── code surface (frame.md code-surface component) ─────────────────────── */
+    .hf04-surface{position:absolute;left:80px;top:150px;width:1130px;height:640px;background:#1F1E1B;
+      border:1px solid rgba(250,249,245,.14);border-radius:12px;padding:42px 46px;overflow:hidden}
+    .hf04-pre{position:relative;font-family:"JetBrains Mono",monospace;font-size:26px;line-height:1.5;white-space:normal;color:#FAF9F5}
+    .hf04-ln{display:block;height:39px;white-space:pre}
+    .hf04-ch{display:inline-block;white-space:pre}
+    .hf04-dim{color:rgba(250,249,245,.55)}
+    .hf04-str{color:#5DB8A6}
+    /* the coral highlight: a bar + one restrained bloom under the agent() call */
+    .hf04-hlbar{position:absolute;left:0;height:3px;background:#CC785C;border-radius:2px;transform-origin:left center;opacity:.9}
+    .hf04-bloom{position:absolute;left:-60px;width:1180px;height:150px;border-radius:50%;
+      background:radial-gradient(closest-side at 42% 50%, rgba(204,120,92,.34) 0%, rgba(204,120,92,.13) 52%, rgba(204,120,92,0) 100%)}
+    .hf04-caret{position:absolute;left:0;top:0;width:3px;height:26px;background:#CC785C;border-radius:1px}
+    /* ── side rail (supporting) ─────────────────────────────────────────────── */
+    .hf04-side{position:absolute;left:1290px;top:150px;width:550px;height:640px;
+      border:1px solid rgba(250,249,245,.14);border-radius:12px;padding:36px}
+    .hf04-claim{font-family:"Inter",sans-serif;font-size:31px;line-height:1.5;color:rgba(250,249,245,.55)}
+    .hf04-claim .hf04-strong{color:#FAF9F5}
+    .hf04-rule{height:1px;background:rgba(250,249,245,.14);margin:28px 0;transform-origin:left center}
+    .hf04-slot{font-family:"JetBrains Mono",monospace;font-size:24px;line-height:1.6;color:rgba(250,249,245,.62);display:block}
+    /* ── copy strip (silent cut: this strip IS the on-screen script) ────────── */
+    .hf04-copy{position:absolute;left:80px;top:846px;width:1760px;font-family:"JetBrains Mono",monospace;font-size:25px;line-height:1.4}
+    .hf04-cue1{color:rgba(250,249,245,.55)}
+    .hf04-sep{color:rgba(250,249,245,.35)}
+    .hf04-cue2{color:rgba(250,249,245,.95)}
+  </style>
+
+  <div data-hf-id="hf-i48s" id="root" data-composition-id="04-the-script" data-start="0" data-duration="9.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-okl9" class="clip" data-start="0" data-duration="9.5" data-track-index="0" style="background:#181715"></div>
+    <div data-hf-id="hf-qcsq" class="hf04-swell" data-layout-allow-overflow id="hf04-swell"></div>
+
+    <div data-hf-id="hf-grsl" class="hf04-rail" id="hf04-rail"><span data-hf-id="hf-a5f5" class="hf04-spike">✱</span> 04 · <span data-hf-id="hf-l03e" class="hf04-file">script.js</span></div>
+
+    <div data-hf-id="hf-nsqa" class="hf04-side" id="hf04-side">
+      <div data-hf-id="hf-izkp" class="hf04-claim"><span data-hf-id="hf-rqiy" id="hf04-claim1">A real script.</span><br data-hf-id="hf-x5px"><span data-hf-id="hf-j7v7" class="hf04-strong" id="hf04-claim2">Plain JavaScript.</span></div>
+      <div data-hf-id="hf-fkxs" class="hf04-rule" id="hf04-rule"></div>
+      <span data-hf-id="hf-vg14" class="hf04-slot" id="hf04-slot1">meta declares the run</span>
+      <span data-hf-id="hf-ubh5" class="hf04-slot" id="hf04-slot2">phase marks progress</span>
+      <span data-hf-id="hf-mki8" class="hf04-slot" id="hf04-slot3">agent spawns work</span>
+    </div>
+
+    <div data-hf-id="hf-xhey" class="hf04-surface" id="hf04-surface">
+      <div data-hf-id="hf-02z6" class="hf04-pre" id="hf04-pre">
+        <div data-hf-id="hf-fg9y" class="hf04-bloom" id="hf04-bloom" data-layout-allow-overflow></div>
+        <div data-hf-id="hf-h0cy" class="hf04-hlbar" id="hf04-hlbar"></div>
+        <span data-hf-id="hf-zuff" class="hf04-caret" id="hf04-caret"></span>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-imwo" class="hf04-copy">
+      <span data-hf-id="hf-d63w" class="hf04-cue1" id="hf04-cue1">A real script. Plain JavaScript.</span><span data-hf-id="hf-2vy9" class="hf04-sep"> · </span><span data-hf-id="hf-if1f" class="hf04-cue2" id="hf04-cue2">meta declares the run · phase marks progress · agent spawns work</span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FRAME_ID = "04-the-script";
+      var FONT_SIZE = 26;
+      var LINE_H = 39;          // 26px * 1.5
+      var CH = FONT_SIZE * 0.6; // JetBrains Mono advance = 0.6em — exact, so no DOM measurement is needed
+
+      // Source of truth for the typed content: [ [text, className], ... ] per line.
+      // Rendered by hand-set mono (frame.md: keywords dimmed cream, strings teal) — the one
+      // coral moment in this frame is reserved for the agent(...) highlight below.
+      var CODE = [
+        [["const", "hf04-dim"], [" meta = {", ""]],
+        [["  name: ", ""], ["'audit'", "hf04-str"], [",", ""]],
+        [["  phases: [{ title: ", ""], ["'Scan'", "hf04-str"], [" }, { title: ", ""], ["'Challenge'", "hf04-str"], [" }],", ""]],
+        [["};", ""]],
+        [],
+        [["phase(", ""], ["'Scan'", "hf04-str"], [");", ""]],
+        [["const", "hf04-dim"], [" findings = ", ""], ["await", "hf04-dim"], [" parallel(", ""]],
+        [["  args.areas.map((area) => () =>", ""]],
+        [["    agent(", ""], ["\u0060Audit ${area}.\u0060", "hf04-str"], [", {", ""]],
+        [["      label: ", ""], ["\u0060scan-${area}\u0060", "hf04-str"], [",", ""]],
+        [["      schema: ", ""], ["'json'", "hf04-str"], [",", ""]],
+        [["    })", ""]],
+        [["  ),", ""]],
+        [[");", ""]]
+      ];
+
+      // ── build the code DOM: every character is its own inline-block span ─────
+      var pre = document.getElementById("hf04-pre");
+      var chars = []; // { el, line, col }
+      for (var li = 0; li < CODE.length; li++) {
+        var lineEl = document.createElement("div");
+        lineEl.className = "hf04-ln";
+        var col = 0;
+        var segs = CODE[li];
+        for (var si = 0; si < segs.length; si++) {
+          var text = segs[si][0];
+          var cls = segs[si][1];
+          for (var ci = 0; ci < text.length; ci++) {
+            var span = document.createElement("span");
+            span.className = "hf04-ch" + (cls ? " " + cls : "");
+            span.textContent = text.charAt(ci);
+            lineEl.appendChild(span);
+            chars.push({ el: span, line: li, col: col });
+            col++;
+          }
+        }
+        pre.appendChild(lineEl);
+      }
+      var lineLen = CODE.map(function (segs) {
+        return segs.reduce(function (n, s) { return n + s[0].length; }, 0);
+      });
+
+      var caret = document.getElementById("hf04-caret");
+      var hlbar = document.getElementById("hf04-hlbar");
+      var bloom = document.getElementById("hf04-bloom");
+
+      // Coral highlight sits under the agent(...) call — line index 8.
+      var HL_LINE = 8;
+      hlbar.style.top = HL_LINE * LINE_H + LINE_H - 7 + "px";
+      hlbar.style.width = lineLen[HL_LINE] * CH + "px";
+      bloom.style.top = HL_LINE * LINE_H + LINE_H / 2 - 75 + "px";
+
+      var tl = gsap.timeline({ paused: true });
+
+      // deterministic idle blink — a finite list of explicit opacity toggles
+      // (no looping directives anywhere, so the timeline stays seek-safe).
+      // Always ends with the caret visible so the next typing run starts solid.
+      function blink(from, dur, period) {
+        var end = from + dur;
+        var t = from;
+        var on = false;
+        while (t < end - 0.02) {
+          tl.set(caret, { opacity: on ? 1 : 0 }, t);
+          on = !on;
+          t += period * 0.5;
+        }
+        tl.set(caret, { opacity: 1 }, end - 0.02);
+      }
+
+      // type a run of characters at a fixed cadence; caret tracks the frontier
+      function type(from, list, dt, linePause) {
+        var t = from;
+        for (var i = 0; i < list.length; i++) {
+          var c = list[i];
+          tl.set(c.el, { opacity: 1 }, t);
+          tl.set(caret, { x: (c.col + 1) * CH, y: c.line * LINE_H + (LINE_H - 26) / 2, opacity: 1 }, t);
+          t += dt;
+          if (linePause && i < list.length - 1 && list[i + 1].line !== c.line) t += linePause;
+        }
+        return t;
+      }
+      function charsOf(lines) {
+        return chars.filter(function (c) { return lines.indexOf(c.line) !== -1; });
+      }
+      function revealGroup(from, list, dt) { // "arrives as a unit": very tight stagger
+        for (var i = 0; i < list.length; i++) tl.set(list[i].el, { opacity: 1 }, from + i * dt);
+      }
+
+      // ── t=0 state: supporting layers hidden (deterministic, seek-safe) ───────
+      gsap.set(chars.map(function (c) { return c.el; }), { opacity: 0 });
+      gsap.set([caret, bloom, hlbar], { opacity: 0 });
+      gsap.set(hlbar, { scaleX: 0 });
+      gsap.set("#hf04-rail", { opacity: 0 });
+      gsap.set("#hf04-side", { opacity: 0 });
+      gsap.set(["#hf04-claim1", "#hf04-claim2", "#hf04-rule", "#hf04-slot1", "#hf04-slot2", "#hf04-slot3"], { opacity: 0 });
+      gsap.set(["#hf04-cue1", "#hf04-cue2"], { opacity: 0 });
+      gsap.set("#hf04-rule", { scaleX: 0 });
+
+      // ── Scene 1 (0.0–3.2s): the surface seats, then `meta` types ─────────────
+      tl.fromTo("#hf04-swell", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, 0);
+      tl.fromTo("#hf04-surface", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" }, 0.02);
+      tl.fromTo("#hf04-rail", { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.34, ease: "power2.out" }, 0.1);
+      tl.fromTo("#hf04-side", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" }, 0.16);
+      // meta block types in, one character at a time, with a breath at each line end
+      type(0.45, charsOf([0, 1, 2, 3]), 0.026, 0.14);           // ends ~3.15
+      blink(3.16, 0.28, 0.53);
+
+      // ── Scene 2 (3.2–5.6s): phase types, then the parallel call lands whole ──
+      tl.fromTo("#hf04-cue1", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power1.out" }, 3.3);
+      type(3.45, charsOf([5]), 0.03, 0);                          // phase('Scan')  → ~3.9
+      blink(3.91, 0.24, 0.53);
+      revealGroup(4.18, charsOf([6]), 0.012);                     // arrives as a unit, not typed
+      blink(4.6, 0.95, 0.53);
+
+      // ── Scene 3 (5.6–7.6s): the agent() call types, then takes the coral mark ─
+      var afterArgs = type(5.65, charsOf([7]), 0.022, 0);         //  → ~6.35
+      var afterCall = type(afterArgs, charsOf([8]), 0.022, 0);    //  → ~7.0
+      // the focal beat: coral underline draws on + one restrained bloom; the caret
+      // hands the coral over to the highlight and leaves.
+      tl.fromTo(hlbar, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 0.9, duration: 0.24, ease: "power2.out" }, afterCall + 0.02);
+      tl.fromTo(bloom, { opacity: 0 }, { opacity: 0.28, duration: 0.38, ease: "power1.out" }, afterCall + 0.02);
+      tl.to(caret, { opacity: 0, duration: 0.18, ease: "power1.in" }, afterCall + 0.04);
+      revealGroup(afterCall + 0.22, charsOf([9, 10, 11, 12, 13]), 0.012); // call completes + closes
+
+      // ── Scene 4 (7.6–9.0s): the claim, the rule, the legend — then hold ──────
+      tl.fromTo("#hf04-cue2", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power1.out" }, 6.45);
+      tl.fromTo("#hf04-claim1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 7.8);
+      tl.fromTo("#hf04-claim2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 8.06);
+      tl.fromTo("#hf04-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 8.3);
+      tl.fromTo("#hf04-slot1", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.26, ease: "power2.out" }, 8.42);
+      tl.fromTo("#hf04-slot2", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.26, ease: "power2.out" }, 8.55);
+      tl.fromTo("#hf04-slot3", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.26, ease: "power2.out" }, 8.68);
+
+      tl.to({}, { duration: 9 }, 0); // pad the timeline to the frame's full 9s
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FRAME_ID] = tl;
+    })();
+  </script>
+</template>

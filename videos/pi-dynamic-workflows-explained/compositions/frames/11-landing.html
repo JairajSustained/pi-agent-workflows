@@ -1,0 +1,202 @@
+<template>
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+
+    #root{position:relative;width:1920px;height:1080px;overflow:hidden;color:#141413;font-family:"JetBrains Mono",ui-monospace,monospace}
+    .f11-landing-ground{position:absolute;inset:0;container-type:size}
+
+    /* kicker-spike — mono uppercase 0.16em chrome, coral ✱ prefix */
+    .f11-landing-kicker{position:absolute;left:80px;top:72px;font-size:26px;letter-spacing:.16em;text-transform:uppercase;opacity:.55}
+    .f11-landing-spike{color:#CC785C;opacity:1}
+
+    /* the terminal pill — the frame's hero. Final geometry fixed; the stretch is a scale transform. */
+    .f11-landing-pill{position:absolute;left:360px;top:280px;width:1200px;height:96px}
+
+    .f11-landing-bar{position:absolute;inset:0;border:1px solid rgba(20,20,19,.2);border-radius:9999px;background:#EFE9DE;box-shadow:0 1px 3px rgba(20,20,19,.08),0 4px 16px rgba(20,20,19,.04);transform-origin:50% 50%;will-change:transform}
+
+    .f11-landing-cmd{position:absolute;inset:0;display:flex;align-items:center;gap:16px;flex-wrap:nowrap;padding:0 40px;white-space:pre;overflow:hidden}
+    .f11-landing-glyph{font-size:30px;opacity:.5}
+    .f11-landing-typewrap{display:inline-flex;align-items:center;white-space:pre}
+    .f11-landing-typed{font-size:30px;line-height:1.2;white-space:pre}
+    .f11-landing-caret{display:inline-block;width:15px;height:32px;margin-left:3px;background:#141413;vertical-align:middle}
+
+    /* supporting recall line — lands, then deliberately demotes */
+    .f11-landing-alt{position:absolute;left:360px;top:412px;width:1200px;text-align:center;font-size:27px;line-height:1.5;white-space:nowrap;opacity:.7}
+
+    /* the closing display line */
+    .f11-landing-close{position:absolute;left:80px;top:580px;width:1760px;text-align:center;font-family:"EB Garamond",serif;font-weight:400;font-size:132px;line-height:1.05;letter-spacing:-.022em}
+
+    /* closing mono index */
+    .f11-landing-mark{position:absolute;left:80px;top:800px;width:1760px;text-align:center;font-size:26px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  </style>
+
+  <div data-hf-id="hf-i6ti" id="root" data-composition-id="11-landing" data-start="0" data-duration="7" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-zmhx" class="clip f11-landing-ground" data-start="0" data-duration="7" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-3kxx" class="f11-landing-kicker"><span data-hf-id="hf-gfpj" class="f11-landing-spike">✱</span> 11 · try it</div>
+
+    <div data-hf-id="hf-kndt" class="f11-landing-pill" role="img" aria-label="pi install github.com/JairajSustained/pi-agent-workflows">
+      <div data-hf-id="hf-9nrm" class="f11-landing-bar"></div>
+      <div data-hf-id="hf-16t1" class="f11-landing-cmd">
+        <span data-hf-id="hf-l1c2" class="f11-landing-glyph">$</span>
+        <span data-hf-id="hf-r9sy" class="f11-landing-typewrap">
+          <span data-hf-id="hf-cq4y" class="f11-landing-typed"></span>
+          <span data-hf-id="hf-5t3u" class="f11-landing-caret" aria-hidden="true"></span>
+        </span>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-6azp" class="f11-landing-alt">one script · dozens of agents · only the answer comes back</div>
+
+    <div data-hf-id="hf-hlol" class="f11-landing-close">The plan lives in code.</div>
+
+    <div data-hf-id="hf-4axa" class="f11-landing-mark"><span data-hf-id="hf-jtt3" class="f11-landing-spike">✱</span> pi-workflows · dynamic workflows for pi</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var DURATION = 7;
+
+      // ── the command, its typed schedule, built ONCE and synchronously ──────────
+      // A chars-at-time row table (the code-terminal-run mechanism): the timeline
+      // only ever READS it, so a given time always renders the same string in
+      // either seek direction. Cadence comes from a fixed-seed LCG consumed in one
+      // deterministic order during this build — the only randomness source.
+      var COMMAND = "pi install github.com/JairajSustained/pi-agent-workflows";
+      var TYPE_START = 0.9;
+      var TYPE_END = 3.15;
+      var BLINK_CYCLES = 10; // 0.7s period across the full 7s window — whole number, so the sweep ends clean
+
+      var lcg = 0x51ec0ded;
+      function rnd() {
+        lcg = (Math.imul(1664525, lcg) + 1013904223) >>> 0;
+        return lcg / 4294967296;
+      }
+
+      var rows = [{ t: 0, n: 0 }];
+      var weights = [];
+      var total = 0;
+      for (var i = 0; i < COMMAND.length; i += 1) {
+        var weight = COMMAND.charAt(i) === " " ? 1.9 : 1 + rnd() * 0.9;
+        weights.push(weight);
+        total += weight;
+      }
+      var acc = 0;
+      for (var j = 0; j < weights.length; j += 1) {
+        acc += weights[j];
+        rows.push({ t: TYPE_START + (acc / total) * (TYPE_END - TYPE_START), n: j + 1 });
+      }
+
+      // 1ms tolerance: GSAP can settle a tween a hair under a row's float time.
+      function charsAt(time) {
+        for (var k = rows.length - 1; k >= 0; k -= 1) {
+          if (time >= rows[k].t - 0.001) return rows[k].n;
+        }
+        return 0;
+      }
+
+      var typedEl = document.querySelector(".f11-landing-typed");
+      var caretEl = document.querySelector(".f11-landing-caret");
+      typedEl.textContent = "";
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ── Scene 1 (0.0–3.6s) — the pill springs in and stretches wide, then types ─
+      // One restrained move: the bar pops from a near-point and stretches
+      // horizontally into the full pill (spring-pop-entrance on a scale, with the
+      // stretch as the shape's signature). power3.out — no overshoot, per the
+      // preset's register.
+      tl.fromTo(
+        ".f11-landing-bar",
+        { scaleX: 0.06, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
+        0.1,
+      );
+      // The prompt glyph + caret arrive with the landed pill, before the typing.
+      tl.fromTo(
+        ".f11-landing-cmd",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.25, ease: "power2.out" },
+        0.45,
+      );
+
+      // The typing driver: linear across the whole frame, so charsAt() is a pure
+      // function of time — no mutable tracker anywhere.
+      var driver = { t: 0 };
+      tl.to(
+        driver,
+        {
+          t: DURATION,
+          duration: DURATION,
+          ease: "none",
+          onUpdate: function () {
+            typedEl.textContent = COMMAND.slice(0, charsAt(driver.t));
+          },
+        },
+        0,
+      );
+
+      // The caret: a timeline-driven sine square wave (never a CSS animation).
+      // The phase runs a WHOLE number of cycles plus a quarter-cycle offset: that
+      // keeps the 0.7s period, makes sin() read solid at BOTH endpoints (a bare
+      // whole-cycle count lands epsilon-negative at t=end in float, hiding the
+      // caret on the final frame), and keeps phase 0 solid so it matches the
+      // caret's unrendered DOM state in either seek direction. It keeps blinking
+      // through the final hold — the sanctioned residual motion on a held frame.
+      var blinker = { p: Math.PI * 0.5 };
+      tl.to(
+        blinker,
+        {
+          p: Math.PI * 0.5 + Math.PI * 2 * BLINK_CYCLES,
+          duration: DURATION,
+          ease: "none",
+          onUpdate: function () {
+            caretEl.style.opacity = Math.sin(blinker.p) >= 0 ? "1" : "0";
+          },
+        },
+        0,
+      );
+
+      // ── Scene 2 (3.6–4.8s) — the recall line lands, then demotes ───────────────
+      tl.fromTo(
+        ".f11-landing-alt",
+        { opacity: 0, y: 10 },
+        { opacity: 0.7, y: 0, duration: 0.5, ease: "power3.out" },
+        3.65,
+      );
+      // Deliberate demotion as the closing line takes over. fromTo +
+      // immediateRender:false so the start value is explicit and seek-safe.
+      tl.fromTo(
+        ".f11-landing-alt",
+        { opacity: 0.7 },
+        { opacity: 0.4, duration: 0.45, ease: "power2.inOut", immediateRender: false },
+        4.35,
+      );
+
+      // ── Scene 3 (4.8–7.0s) — the closing line lands and holds ──────────────────
+      // This frame's hero landing: one quiet settle (rise + a whisper of scale),
+      // then stillness — the caret's blink is the only motion left.
+      tl.fromTo(
+        ".f11-landing-close",
+        { opacity: 0, y: 18, scale: 0.985 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" },
+        4.85,
+      );
+      tl.fromTo(
+        ".f11-landing-mark",
+        { opacity: 0 },
+        { opacity: 0.6, duration: 0.5, ease: "power2.out" },
+        5.55,
+      );
+
+      // No exit tween: this is the final frame and it holds to the last frame.
+      tl.seek(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["11-landing"] = tl;
+    })();
+  </script>
+</template>

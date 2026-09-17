@@ -1,0 +1,113 @@
+<template>
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+    #root{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:Inter,system-ui,sans-serif;color:#FAF9F5}
+    .clip{position:absolute;inset:0;container-type:size}
+    .rail{position:absolute;left:80px;top:72px;font-family:"JetBrains Mono",monospace;font-size:26px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+    .left{position:absolute;left:80px;top:170px;width:900px}
+    .lefthead{font-family:"JetBrains Mono",monospace;font-size:26px;letter-spacing:.02em;opacity:.7;margin-bottom:26px}
+    .var{background:#1F1E1B;border:1px solid rgba(250,249,245,.14);border-radius:12px;padding:24px 28px;margin-bottom:18px}
+    .vname{font-family:"JetBrains Mono",monospace;font-size:30px;color:#FAF9F5}
+    .vmeta{font-family:Inter,sans-serif;font-size:25px;opacity:.6;margin-top:8px}
+    .bars{margin-top:14px}
+    .bar{height:12px;border-radius:3px;background:rgba(250,249,245,.2);margin-bottom:9px;transform-origin:left center}
+    .bar.s{width:64%}
+    .arrow{position:absolute;left:1000px;top:400px;width:300px;height:1px;background:rgba(250,249,245,.45);transform-origin:left center}
+    .arrowhead{position:absolute;left:1293px;top:395px;width:11px;height:11px;border-top:1px solid rgba(250,249,245,.7);border-right:1px solid rgba(250,249,245,.7);transform:rotate(45deg)}
+    .arrowlabel{position:absolute;left:1000px;top:350px;width:300px;text-align:center;font-family:"JetBrains Mono",monospace;font-size:26px;color:#CC785C}
+    .link{position:absolute;left:1300px;top:400px;width:1px;height:100px;background:rgba(250,249,245,.25);transform-origin:top center}
+    .payload{position:absolute;left:1050px;top:500px;width:300px;height:120px;background:#FAF9F5;border-radius:10px;color:#141413;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:26px}
+    .parent{position:absolute;left:1400px;top:250px;width:440px;height:560px;border:1px solid rgba(250,249,245,.3);border-radius:12px;padding:30px}
+    .plabel{font-family:"JetBrains Mono",monospace;font-size:26px;letter-spacing:.02em;opacity:.75;margin-bottom:24px}
+    .pnote{font-family:"EB Garamond",Georgia,serif;font-size:40px;line-height:1.18;letter-spacing:-.018em;opacity:.95}
+    .pnote b{font-weight:400}
+    .psub{font-family:"JetBrains Mono",monospace;font-size:24px;opacity:.6;margin-top:26px}
+    .copy{position:absolute;left:80px;top:838px;width:1760px;font-family:"JetBrains Mono",monospace;font-size:26px;line-height:1.6;opacity:.8}
+    .copy-b{opacity:1}
+  </style>
+  <div data-hf-id="hf-b8fu" id="root" data-composition-id="06-what-comes-back" data-start="0" data-duration="8.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-m9ai" class="clip" data-start="0" data-duration="8.5" data-track-index="0" style="background:#181715"></div>
+
+    <div data-hf-id="hf-lskn" class="rail">✱ 06 · what crosses back</div>
+
+    <div data-hf-id="hf-i0dv" class="left">
+      <div data-hf-id="hf-4sl2" class="lefthead">script variables (never in the parent)</div>
+      <div data-hf-id="hf-p8i9" class="var var1">
+        <div data-hf-id="hf-rqap" class="vname">findings</div>
+        <div data-hf-id="hf-qsk8" class="vmeta">7 objects across 3 areas</div>
+        <div data-hf-id="hf-umx2" class="bars"><div data-hf-id="hf-ufsv" class="bar"></div><div data-hf-id="hf-bfsc" class="bar s"></div></div>
+      </div>
+      <div data-hf-id="hf-ve82" class="var var2">
+        <div data-hf-id="hf-gpit" class="vname">verdicts</div>
+        <div data-hf-id="hf-67y2" class="vmeta">7 verdicts + 7 refutations</div>
+        <div data-hf-id="hf-rgy2" class="bars"><div data-hf-id="hf-c51b" class="bar"></div><div data-hf-id="hf-vnlw" class="bar s"></div></div>
+      </div>
+      <div data-hf-id="hf-zcc3" class="var var3">
+        <div data-hf-id="hf-cg3h" class="vname">report</div>
+        <div data-hf-id="hf-8qss" class="vmeta">the compiled markdown</div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-zgux" class="arrowlabel">return</div>
+    <div data-hf-id="hf-tl8j" class="arrow"></div>
+    <div data-hf-id="hf-k5lx" class="arrowhead"></div>
+    <div data-hf-id="hf-45nk" class="link"></div>
+    <div data-hf-id="hf-ozmm" class="payload">"2 findings"</div>
+
+    <div data-hf-id="hf-zmrs" class="parent">
+      <div data-hf-id="hf-7jjp" class="plabel">parent · your context</div>
+      <div data-hf-id="hf-o5tg" class="pnote"><span data-hf-id="hf-ouma" class="pline-a">The answer.</span><br data-hf-id="hf-x5px"><b data-hf-id="hf-g5hw" class="pline-b">Not the journey.</b></div>
+      <div data-hf-id="hf-l8eg" class="psub">the journey stayed in the script</div>
+    </div>
+
+    <div data-hf-id="hf-jds0" class="copy"><span data-hf-id="hf-r7zz" class="copy-a">Intermediate results stay in script variables.</span> · <span data-hf-id="hf-mshm" class="copy-b">Only the return value crosses back.</span></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    /* Scene 1 (0.0–3.6s) — the left pane arrives from its wing, cards revealing one
+       per reading beat; each card's micro-blocks fill in after its name lands. */
+    tl.fromTo(".rail", { opacity: 0 }, { opacity: 0.6, duration: 0.5 }, 0.05);
+    tl.fromTo(".lefthead", { opacity: 0, y: 14 }, { opacity: 0.7, y: 0, duration: 0.5 }, 0.05);
+
+    tl.fromTo(".var1", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 0.2);
+    tl.fromTo(".var1 .vname", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 0.42);
+    tl.fromTo(".var1 .vmeta", { opacity: 0, y: 8 }, { opacity: 0.6, y: 0, duration: 0.4 }, 0.54);
+    tl.fromTo(".var1 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out", stagger: 0.08 }, 0.66);
+
+    tl.fromTo(".var2", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 1.3);
+    tl.fromTo(".var2 .vname", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 1.52);
+    tl.fromTo(".var2 .vmeta", { opacity: 0, y: 8 }, { opacity: 0.6, y: 0, duration: 0.4 }, 1.64);
+    tl.fromTo(".var2 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out", stagger: 0.08 }, 1.76);
+
+    tl.fromTo(".var3", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 2.3);
+    tl.fromTo(".var3 .vname", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 2.52);
+    tl.fromTo(".var3 .vmeta", { opacity: 0, y: 8 }, { opacity: 0.6, y: 0, duration: 0.4 }, 2.64);
+
+    tl.fromTo(".copy-a", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, 1.1);
+
+    /* Scene 2 (3.6–5.2s) — the single hairline arrow draws across the gap; the cream
+       payload chip travels along it and seats on the tip. The frame's one coral. */
+    tl.fromTo(".arrowlabel", { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.4 }, 3.6);
+    tl.fromTo(".arrow", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 3.85);
+    tl.fromTo(".arrowhead", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.3);
+    tl.fromTo(".payload", { opacity: 0, x: -140 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 4.45);
+    tl.fromTo(".link", { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, 4.9);
+
+    /* Scene 3 (5.2–6.8s) — the parent arrives from the opposite wing (the mirrored
+       half of the split) and its hairline lights; the claim reveals in two beats. */
+    tl.fromTo(".parent", { opacity: 0, x: 34, borderColor: "rgba(250,249,245,.14)" }, { opacity: 1, x: 0, borderColor: "rgba(250,249,245,.32)", duration: 0.6, ease: "power3.out" }, 5.2);
+    tl.fromTo(".plabel", { opacity: 0 }, { opacity: 0.75, duration: 0.4 }, 5.5);
+    tl.fromTo(".pline-a", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45 }, 5.72);
+    tl.fromTo(".pline-b", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45 }, 6.15);
+    tl.fromTo(".psub", { opacity: 0 }, { opacity: 0.6, duration: 0.45 }, 6.42);
+
+    /* Scene 4 (6.8–8.0s) — the second cue lands, then the frame holds still. */
+    tl.fromTo(".copy-b", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, 6.9);
+
+    window.__timelines["06-what-comes-back"] = tl;
+  </script>
+</template>

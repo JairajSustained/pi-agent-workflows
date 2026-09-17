@@ -5,6 +5,20 @@ The model writes a JS orchestration script at runtime; the `workflow` tool
 executes it across isolated `pi` subprocess agents. Only the script's return
 value reaches the parent context — the plan lives in code, not in context.
 
+## Watch the 90-second explainer
+
+https://github.com/JairajSustained/pi-agent-workflows/blob/main/videos/pi-dynamic-workflows-explained/renders/video.mp4
+
+<video src="videos/pi-dynamic-workflows-explained/renders/video.mp4" poster="videos/pi-dynamic-workflows-explained/renders/poster.jpg" controls muted playsinline width="100%"></video>
+
+[![Watch the explainer](videos/pi-dynamic-workflows-explained/renders/poster.jpg)](videos/pi-dynamic-workflows-explained/renders/video.mp4)
+
+**[▶ Play the 91-second explainer](videos/pi-dynamic-workflows-explained/renders/video.mp4)** · 1920×1080 · silent cut · [full source project](videos/pi-dynamic-workflows-explained)
+
+What it covers: the context-window ceiling · moving the plan into a script ·
+`agent()` isolation · `parallel()` / `pipeline()` · adversarial verification ·
+a real recorded run (45,330 tokens for two words) · resume replaying cached work.
+
 ## Install
 
 Try it without installing:

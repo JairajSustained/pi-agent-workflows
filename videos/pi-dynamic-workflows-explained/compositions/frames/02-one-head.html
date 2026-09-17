@@ -1,0 +1,334 @@
+<template>
+  <style>
+    @font-face{font-family:"EB Garamond";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-400.woff2") format("woff2");}
+    @font-face{font-family:"EB Garamond";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/EBGaramond-700.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-400.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-700.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");}
+    @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-700.woff2") format("woff2");}
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: #141413;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    /* ---- mono chrome (kicker-spike) ---- */
+    .oh-kicker {
+      position: absolute;
+      left: 80px;
+      top: 72px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      opacity: .55;
+    }
+    .oh-kicker .oh-spike { color: #CC785C; }
+
+    /* ---- the context-window box (foreground subject) ---- */
+    .oh-box {
+      position: absolute;
+      left: 80px;
+      top: 200px;
+      width: 900px;
+      height: 560px;
+      padding: 24px;
+      border-radius: 12px;
+      z-index: 2;
+    }
+    .oh-boxlabel {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: .02em;
+      opacity: .7;
+      margin-bottom: 18px;
+      display: block;
+      height: 34px;
+      white-space: pre;
+    }
+    .oh-ch { display: inline-block; will-change: opacity; }
+
+    .oh-card {
+      height: 62px;
+      margin-bottom: 14px;
+      background: #EFE9DE;
+      border: 1px solid rgba(20, 20, 19, .12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 30px;
+      line-height: 1;
+      color: rgba(20, 20, 19, .88);
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    /* the ONE coral voltage moment of this frame — the result that no longer fits */
+    .oh-spill {
+      position: relative;
+      z-index: 3;
+      height: 62px;
+      margin-top: 6px;
+      background: #EFE9DE;
+      border: 1px solid #CC785C;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 30px;
+      line-height: 1;
+      color: #CC785C;
+      box-shadow: 0 1px 3px rgba(20, 20, 19, .08), 0 4px 16px rgba(20, 20, 19, .04);
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    /* the hairline outline of the box, drawn on at t=0 (svg-path-draw) */
+    .oh-outline {
+      position: absolute;
+      left: 80px;
+      top: 200px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .oh-outline rect {
+      fill: none;
+      stroke: rgba(20, 20, 19, .2);
+      stroke-width: 1;
+    }
+
+    /* ---- turn rail: each turn feeds the window from the right ---- */
+    .oh-arrows {
+      position: absolute;
+      left: 1030px;
+      top: 200px;
+      width: 810px;
+    }
+    .oh-arrowrow {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      height: 70px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(20, 20, 19, .8);
+    }
+    .oh-arrowrow .oh-glyph { font-size: 34px; opacity: .5; }
+    .oh-ticks {
+      position: absolute;
+      left: 960px;
+      top: 190px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .oh-ticks line {
+      stroke: rgba(20, 20, 19, .25);
+      stroke-width: 1;
+      stroke-linecap: round;
+    }
+    .oh-dots {
+      position: absolute;
+      left: 960px;
+      top: 190px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .oh-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(20, 20, 19, .35);
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+    .oh-dot-1 { left: 16px; top: 41px; }
+    .oh-dot-2 { left: 16px; top: 111px; }
+    .oh-dot-3 { left: 16px; top: 181px; }
+
+    /* ---- the note lines (reading ramp) ---- */
+    .oh-note {
+      position: absolute;
+      left: 1030px;
+      top: 470px;
+      width: 800px;
+      font-size: 33px;
+      line-height: 1.45;
+      color: rgba(20, 20, 19, .9);
+    }
+    .oh-noteline { display: block; }
+    .oh-noteland {
+      margin-top: 8px;
+      font-size: 38px;
+      font-weight: 700;
+      color: #141413;
+    }
+
+    /* ---- the strip that settles the beat (display) ---- */
+    .oh-caption {
+      position: absolute;
+      left: 80px;
+      top: 810px;
+      width: 1760px;
+      font-family: "EB Garamond", Georgia, serif;
+      font-weight: 400;
+      font-size: 80px;
+      line-height: 1;
+      letter-spacing: -.018em;
+      color: #141413;
+    }
+  </style>
+
+  <div data-hf-id="hf-xxpf" id="root" data-composition-id="02-one-head" data-start="0" data-duration="8.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-klcc" class="clip" data-start="0" data-duration="8.5" data-track-index="0" style="background:#FAF9F5"></div>
+
+    <div data-hf-id="hf-3g66" class="oh-kicker"><span data-hf-id="hf-4fgo" class="oh-spike">✱</span> 02 · the ceiling</div>
+
+    <svg data-hf-id="hf-8dcv" class="oh-outline" width="900" height="560" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+      <rect data-hf-id="hf-2598" id="02-one-head-outline" x="0.5" y="0.5" width="899" height="559" rx="12" />
+    </svg>
+
+    <div data-hf-id="hf-odu9" class="oh-box">
+      <span data-hf-id="hf-l6pv" class="oh-boxlabel" id="02-one-head-boxlabel">context window</span>
+      <div data-hf-id="hf-o525" class="oh-card" id="02-one-head-card-1">audit result — auth module</div>
+      <div data-hf-id="hf-bhlp" class="oh-card" id="02-one-head-card-2">audit result — billing module</div>
+      <div data-hf-id="hf-q5wt" class="oh-card" id="02-one-head-card-3">audit result — jobs module</div>
+      <div data-hf-id="hf-sbzg" class="oh-card" id="02-one-head-card-4">verification notes</div>
+      <div data-hf-id="hf-bvu9" class="oh-card" id="02-one-head-card-5">findings, refutations, retries…</div>
+      <div data-hf-id="hf-503s" class="oh-spill" id="02-one-head-spill">the next result</div>
+    </div>
+
+    <svg data-hf-id="hf-898h" class="oh-ticks" width="80" height="240" viewBox="0 0 80 240" xmlns="http://www.w3.org/2000/svg">
+      <line data-hf-id="hf-0eop" id="02-one-head-tick-1" x1="58" y1="45" x2="20" y2="45" />
+      <line data-hf-id="hf-dzm8" id="02-one-head-tick-2" x1="58" y1="115" x2="20" y2="115" />
+      <line data-hf-id="hf-f7cj" id="02-one-head-tick-3" x1="58" y1="185" x2="20" y2="185" />
+    </svg>
+
+    <div data-hf-id="hf-t5v2" class="oh-dots">
+      <div data-hf-id="hf-ro92" class="oh-dot oh-dot-1" id="02-one-head-dot-1"></div>
+      <div data-hf-id="hf-33b8" class="oh-dot oh-dot-2" id="02-one-head-dot-2"></div>
+      <div data-hf-id="hf-8idi" class="oh-dot oh-dot-3" id="02-one-head-dot-3"></div>
+    </div>
+
+    <div data-hf-id="hf-thkg" class="oh-arrows">
+      <div data-hf-id="hf-jtib" class="oh-arrowrow" id="02-one-head-turn-1"><span data-hf-id="hf-83k6">ask</span><span data-hf-id="hf-n2sl" class="oh-glyph">→</span></div>
+      <div data-hf-id="hf-b5mg" class="oh-arrowrow" id="02-one-head-turn-2"><span data-hf-id="hf-5gzw">wait</span><span data-hf-id="hf-ogft" class="oh-glyph">→</span></div>
+      <div data-hf-id="hf-bxa9" class="oh-arrowrow" id="02-one-head-turn-3"><span data-hf-id="hf-4nua">ask again</span><span data-hf-id="hf-pncw" class="oh-glyph">→</span></div>
+    </div>
+
+    <div data-hf-id="hf-y1we" class="oh-note">
+      <span data-hf-id="hf-et4v" class="oh-noteline" id="02-one-head-note-1">One context window.</span>
+      <span data-hf-id="hf-ue5c" class="oh-noteline" id="02-one-head-note-2">Turn by turn.</span>
+      <span data-hf-id="hf-7rks" class="oh-noteline oh-noteland" id="02-one-head-note-3">Every result lands back in the same head.</span>
+    </div>
+
+    <div data-hf-id="hf-fl4s" class="oh-caption" id="02-one-head-caption">One head, turn by turn.</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    const root = document.querySelector('[data-composition-id="02-one-head"]');
+
+    // ---- setup: measured stroke lengths for the drawn hairlines (svg-path-draw) ----
+    const outlineEl = document.getElementById("02-one-head-outline");
+    const outlineLen = outlineEl.getTotalLength();
+    outlineEl.style.strokeDasharray = `${outlineLen}`;
+    outlineEl.style.strokeDashoffset = `${outlineLen}`;
+
+    const tickEls = Array.from(root.querySelectorAll(".oh-ticks line"));
+    const tickLen = tickEls.map((el) => {
+      const len = el.getTotalLength();
+      el.style.strokeDasharray = `${len}`;
+      el.style.strokeDashoffset = `${len}`;
+      return len;
+    });
+
+    // ---- setup: split the mono box label so it can type in, one glyph at a time ----
+    const label = document.getElementById("02-one-head-boxlabel");
+    const labelChars = [];
+    const labelText = label.textContent;
+    label.textContent = "";
+    for (const ch of labelText) {
+      const span = document.createElement("span");
+      span.className = "oh-ch";
+      span.textContent = ch === " " ? "\u00A0" : ch;
+      label.appendChild(span);
+      labelChars.push(span);
+    }
+
+    const cards = [1, 2, 3, 4, 5].map((n) => document.getElementById("02-one-head-card-" + n));
+    const spill = document.getElementById("02-one-head-spill");
+    const dots = [1, 2, 3].map((n) => document.getElementById("02-one-head-dot-" + n));
+    const turns = [1, 2, 3].map((n) => document.getElementById("02-one-head-turn-" + n));
+    const notes = [1, 2, 3].map((n) => document.getElementById("02-one-head-note-" + n));
+    const caption = document.getElementById("02-one-head-caption");
+    const kicker = root.querySelector(".oh-kicker");
+
+    const tl = gsap.timeline({ paused: true });
+
+    // Scene 1 (0.0–1.2s) — the window seats itself: hairline draws on, mono label types in.
+    tl.fromTo(kicker, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power3.out" }, 0);
+    tl.fromTo(
+      outlineEl,
+      { strokeDashoffset: outlineLen },
+      { strokeDashoffset: 0, duration: 0.85, ease: "power2.out" },
+      0.05,
+    );
+    tl.fromTo(labelChars, { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none", stagger: 0.022 }, 0.45);
+
+    // Scene 2 (1.2–4.6s) — results pile in, one per beat; the last one no longer fits.
+    const cardAt = [1.2, 1.65, 2.1, 2.55, 3.0];
+    cards.forEach((card, i) => {
+      tl.fromTo(
+        card,
+        { scale: 0, opacity: 0, y: 14 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+        cardAt[i],
+      );
+    });
+    // the payoff: it arrives, then physically breaks the border — the box can no longer hold it
+    tl.fromTo(
+      spill,
+      { scale: 0, opacity: 0, y: -40 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+      3.55,
+    );
+    tl.fromTo(spill, { y: 0 }, { y: 68, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 4.1);
+
+    // Scene 3 (4.6–6.2s) — the turns feed the window: each hairline draws in toward the box.
+    const turnAt = [4.65, 5.15, 5.65];
+    turnAt.forEach((at, i) => {
+      tl.fromTo(
+        tickEls[i],
+        { strokeDashoffset: tickLen[i] },
+        { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" },
+        at,
+      );
+      tl.fromTo(
+        dots[i],
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.25, ease: "power3.out", transformOrigin: "50% 50%" },
+        at + 0.3,
+      );
+      tl.fromTo(turns[i], { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.32, ease: "power3.out" }, at + 0.05);
+    });
+
+    // Scene 4 (6.2–8.0s) — the reading lands, then the strip settles and holds still.
+    const noteAt = [6.25, 6.7, 7.15];
+    notes.forEach((note, i) => {
+      tl.fromTo(note, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, noteAt[i]);
+    });
+    tl.fromTo(caption, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.45);
+
+    window.__timelines["02-one-head"] = tl;
+  </script>
+</template>

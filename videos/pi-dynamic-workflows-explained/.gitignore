@@ -1,0 +1,9 @@
+# HyperFrames build artifacts (Studio previews, caches)
+.thumbnails/
+.media/
+node_modules/
+.DS_Store
+
+# Studio edit backups + generated worker packets (regenerable)
+.hyperframes/backup/
+.hyperframes/frame-packets/
