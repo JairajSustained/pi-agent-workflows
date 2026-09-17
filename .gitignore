@@ -2,3 +2,8 @@
 # Saved reusable workflows in .pi/workflows/*.js are meant to be committed.
 .pi/workflows/runs/
 node_modules/
+# Secrets must never be committed (see CONTRIBUTING.md).
+.env
+.env.*
+*.pem
+*.key
