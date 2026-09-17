@@ -1,0 +1,4 @@
+# Ephemeral workflow run records (scripts, results, status per run).
+# Saved reusable workflows in .pi/workflows/*.js are meant to be committed.
+.pi/workflows/runs/
+node_modules/
